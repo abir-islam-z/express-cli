@@ -1,0 +1,16 @@
+export const schematics = {
+  module: "module",
+  mo: "module",
+  controller: "controller",
+  c: "controller",
+  service: "service",
+  s: "service",
+  model: "model",
+  m: "model",
+  interface: "interface",
+  i: "interface",
+  validation: "validation",
+  v: "validation",
+  route: "route",
+  r: "route",
+};

@@ -1,0 +1,28 @@
+{
+  "name": "mycli",
+  "version": "1.0.0",
+  "description": "My Express CLI",
+  "main": "dist/index.js",
+  "bin": {
+    "ph": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "chalk": "^5.4.1",
+    "commander": "^13.1.0",
+    "dotenv": "^16.4.7",
+    "ejs": "^3.1.10",
+    "fs-extra": "^11.3.0",
+    "ora": "^8.2.0",
+    "simple-git": "^3.27.0"
+  },
+  "devDependencies": {
+    "@types/ejs": "^3.1.5",
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^22.13.1",
+    "typescript": "^5.7.3"
+  }
+}

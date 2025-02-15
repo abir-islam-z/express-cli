@@ -1,0 +1,32 @@
+import { Router } from 'express';
+import { <%= name %>Controller } from './<%= name %>.controller';
+
+const router = Router();
+
+router.post(
+  '/register',
+  <%= name %>Controller.create,
+);
+
+router.get(
+  '/',
+  <%= name %>Controller.findAll,
+);
+
+router.get(
+  '/:id',
+  <%= name %>Controller.findOne,
+);
+
+router.patch(
+  '/:id',
+  <%= name %>Controller.update,
+);
+
+router.delete(
+  '/:id',
+  <%= name %>Controller.remove,
+);
+
+
+export const <%= name %>Routes = router;

@@ -1,0 +1,8 @@
+import { model, Schema } from 'mongoose';
+import { I<%= name %> } from './<%= name %>.interface';
+
+const <%= name %>Schema = new Schema<I<%= name %>>({
+  name: String,
+});
+
+export const <%= name %>Model = model<I<%= name %>>('<%= name %>', <%= name %>Schema);

@@ -1,0 +1,30 @@
+import { T<%= name %> } from './<%= name %>.interface';
+import { <%= name %>Model } from './<%= name %>.model';
+
+const create<%= name %> = async (data: T<%= name %>) => {
+  return await <%= name %>Model.create(data);
+};
+
+const getAll<%= name %>s = async () => {
+  return await <%= name %>Model.find();
+};
+
+const get<%= name %>ById = async (id: string) => {
+  return await <%= name %>Model.findById(id);
+};
+
+const update<%= name %> = async (id: string, data: Partial<T<%= name %>>) => {
+  return await <%= name %>Model.findByIdAndUpdate(id, data, { new: true });
+};
+
+const delete<%= name %> = async (id: string) => {
+  return await <%= name %>Model.findByIdAndDelete(id);
+};
+
+export const <%= name %>Service = {
+  create<%= name %>,
+  getAll<%= name %>s,
+  get<%= name %>ById,
+  update<%= name %>,
+  delete<%= name %>,
+};
