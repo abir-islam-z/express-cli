@@ -1,14 +1,14 @@
 import { program } from "commander";
-import { generateFile } from "./generateFile";
-import { generateModule } from "./generateModule";
+import { generateByType } from "../generators/generateByType";
+import { generateModule } from "../generators/generateModule";
 
-export const generateCommand = () => {
+export const initGenerateCommand = () => {
   const generateCommand = program.command("generate").alias("g");
   generateCommand.arguments("<type> <name>").action(async (type, name) => {
     if (type === "module" || type === "mo") {
       generateModule(name);
       return;
     }
-    await generateFile(type, name);
+    await generateByType(type, name);
   });
 };

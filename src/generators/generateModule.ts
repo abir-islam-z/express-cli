@@ -1,5 +1,16 @@
+import { createImportLine } from "@/utils/createImportLine";
 import fs from "fs-extra";
 import { INDEX_ROUTE_PATH } from "../const";
+import { generateByType } from "./generateByType";
+
+const filesToCreate = [
+  "controller",
+  "model",
+  "route",
+  "service",
+  "interface",
+  "validation",
+];
 
 const updateIndexRouteFile = async (name: string) => {
   /**
@@ -15,7 +26,7 @@ const updateIndexRouteFile = async (name: string) => {
   /**
    * ? Create the import line
    * */
-  const importLine = `import ${name}Routes from "../modules/${name.toLowerCase()}/${name.toLowerCase()}.route";`;
+  const importLine = await createImportLine("route", name);
 
   /**
    * ? Check if the import line already exists in the index route file
@@ -77,6 +88,17 @@ const updateIndexRouteFile = async (name: string) => {
   await fs.writeFile(INDEX_ROUTE_PATH, updatedIndexRouteContent);
 };
 
-export const generateModule = (name: string) => {
-  console.log("generateModule", name);
+export const generateModule = async (name: string) => {
+  // ? Check if the module already exists
+
+  const isModuleExists = await fs.pathExists(`src/app/modules/${name}`);
+
+  if (isModuleExists) {
+    console.log(`Module ${name} already exists`);
+    return;
+  }
+
+  filesToCreate.forEach(async (type) => {
+    await generateByType(type, name);
+  });
 };

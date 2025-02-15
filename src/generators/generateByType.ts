@@ -15,7 +15,7 @@ import { getTemplate } from "../utils/getTemplate";
  * @returns - void
  */
 
-export const generateFile = async (type: string, name: string) => {
+export const generateByType = async (type: string, name: string) => {
   // ? check if schematic exists
   const isExistinSchematic = schematics[type];
 
@@ -39,7 +39,7 @@ export const generateFile = async (type: string, name: string) => {
 
   const spinner = ora("Generating file").start();
 
-  const templatePath = getTemplate(type);
+  const templatePath = await getTemplate(type);
 
   const template = await fs.readFile(templatePath!, "utf8");
   const content = ejs.render(template, { name });
