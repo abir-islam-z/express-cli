@@ -4,11 +4,13 @@
   "description": "My Express CLI",
   "main": "dist/index.js",
   "bin": {
-    "ph": "./dist/index.js"
+    "ex-ph": "./dist/index.js"
   },
   "scripts": {
     "build": "tsc",
-    "start": "node dist/index.js"
+    "start": "node dist/index.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "dependencies": {
     "chalk": "^5.4.1",
@@ -17,13 +19,21 @@
     "ejs": "^3.1.10",
     "fs-extra": "^11.3.0",
     "ora": "^8.2.0",
-    "simple-git": "^3.27.0"
+    "simple-git": "^3.27.0",
+    "winston": "^3.17.0",
+    "winston-daily-rotate-file": "^5.0.0"
   },
   "devDependencies": {
+    "@eslint/js": "^9.20.0",
+    "@types/bun": "latest",
     "@types/ejs": "^3.1.5",
     "@types/fs-extra": "^11.0.4",
-    "@types/node": "^22.13.1",
+    "@types/node": "^22.13.4",
+    "eslint": "^9.20.1",
+    "eslint-plugin-prettier": "^5.2.3",
+    "eslint-plugin-security": "^3.0.1",
+    "eslint-plugin-unicorn": "^56.0.1",
     "typescript": "^5.7.3",
-    "@types/bun": "latest"
+    "typescript-eslint": "^8.24.0"
   }
 }

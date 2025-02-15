@@ -1,59 +1,56 @@
-import chalk from "chalk";
-import fs from "fs-extra";
-import path from "path";
-import simpleGit from "simple-git";
-
-import ora from "ora";
+import { logger } from '@/utils/logger';
+import { execSync } from 'child_process';
+import fs from 'fs-extra';
+import ora from 'ora';
+import path from 'path';
+import { exit } from 'process';
+import simpleGit from 'simple-git';
 
 export const generateProject = async (projectName: string) => {
-  const repoUrl = process.env.TEMPLATE_REPO_URL || ""; // Repository URL
+  const repoUrl = process.env.TEMPLATE_REPO_URL || '';
 
   if (!repoUrl) {
-    console.error(chalk.red("❌ REPO_URL not found in .env"));
-    return;
+    logger.error('❌ Error: Template repository URL not found');
+    exit(1);
   }
 
-  const targetDir = path.join(process.cwd(), projectName); // Destination
+  const targetDir = path.join(process.cwd(), projectName);
 
   try {
-    if (fs.existsSync(targetDir)) {
-      console.log(chalk.red(`❌ Project "${projectName}" already exists!`));
-      return;
+    // Replace existsSync with pathExists for async operation
+    const exists = await fs.pathExists(targetDir);
+    if (exists) {
+      logger.error(`❌ Error: Directory "${projectName}" already exists`);
+      exit(1);
     }
 
     const spinner = ora(`Creating project "${projectName}"...`).start();
-    // Clone the repository
     const git = simpleGit();
-    spinner.text = "Initializing git...";
+    spinner.text = 'Initializing git...';
     await git.clone(repoUrl, targetDir);
-    spinner.succeed();
-    console.log(
-      chalk.green(`✅ Project "${projectName}" created successfully!`)
-    );
-
-    // Install dependencies
-    console.log(chalk.yellow(`📦 Installing dependencies...`));
-    installDependencies(targetDir);
+    spinner.succeed(`Created project "${projectName}"`);
+    await installDependencies(targetDir);
   } catch (error) {
-    console.error(chalk.red(`❌ Error: ${error}`));
+    logger.error('Error generating project:', error);
+    exit(1);
   }
 };
 
-const installDependencies = (targetDir: string) => {
-  const packageJsonPath = path.join(targetDir, "package.json");
-  const packageJson = fs.readJsonSync(packageJsonPath);
-  if (!packageJson) {
-    console.error(
-      chalk.red(`❌ Error: package.json not found in "${targetDir}"`)
-    );
-    return;
-  }
+// Make installDependencies async
+const installDependencies = async (targetDir: string) => {
+  const packageJsonPath = path.join(targetDir, 'package.json');
+  try {
+    const packageJson = await fs.readJson(packageJsonPath);
+    if (!packageJson) {
+      logger.error('❌ Error: package.json not found or invalid');
+      exit(1);
+    }
 
-  const spinner = ora("Installing dependencies...").start();
-  const execSync = require("child_process").execSync;
-  execSync(`cd ${targetDir} && npm install`, { stdio: "inherit" });
-  spinner.succeed();
-  console.log(
-    chalk.green(`🚀 Setup complete! Run "cd ${targetDir} && npm run dev"`)
-  );
+    const spinner = ora('Installing dependencies...').start();
+    execSync(`cd ${targetDir} && npm install`, { stdio: 'inherit' });
+    spinner.succeed('Installed dependencies');
+  } catch (error) {
+    logger.error('❌ Error reading package.json:', error);
+    exit(1);
+  }
 };

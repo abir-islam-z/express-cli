@@ -1,2 +1,2 @@
-export * from "./generate";
-export * from "./new";
+export * from './generate';
+export * from './new';
