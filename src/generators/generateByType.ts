@@ -3,7 +3,6 @@ import ejs from "ejs";
 import fs from "fs-extra";
 import ora from "ora";
 import path from "path";
-import { APP_FILE_PATH, SERVER_FILE_PATH, SOURCE_DIR_PATH } from "../const";
 import { schematics } from "../schematics";
 import { createOutputPath } from "../utils/createOutputPath";
 import { getTemplate } from "../utils/getTemplate";
@@ -20,20 +19,7 @@ export const generateByType = async (type: string, name: string) => {
   const isExistinSchematic = schematics[type];
 
   if (!isExistinSchematic) {
-    console.log(chalk.red(`Schematic ${type} not found`));
-    return;
-  }
-
-  /**
-   *  ? check if src folder, app.ts, server.ts exists
-   *  ! if not promt user to create a new project
-   *  */
-  const isSrcDirExists = fs.existsSync(SOURCE_DIR_PATH);
-  const isAppFileExists = fs.existsSync(APP_FILE_PATH);
-  const isServerFileExists = fs.existsSync(SERVER_FILE_PATH);
-
-  if (!isSrcDirExists || !isAppFileExists || !isServerFileExists) {
-    console.log(chalk.red("❌ Please create a new project first"));
+    console.log(chalk.red(`❌ Schematic ${type} not found`));
     return;
   }
 
@@ -48,5 +34,6 @@ export const generateByType = async (type: string, name: string) => {
   await fs.ensureDir(path.dirname(outputPath));
   await fs.writeFile(outputPath, content);
 
-  spinner.succeed(chalk.green(`✅ ${type} "${name}" generated successfully!`));
+  spinner.succeed("Created " + outputPath);
+  spinner.stop();
 };

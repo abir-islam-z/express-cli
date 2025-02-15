@@ -3,8 +3,8 @@ import { generateProject } from "../generators/generateProject";
 
 export const initNewCommand = () =>
   program
-    .command("new <project-name> <repo-url>")
+    .command("new <project-name>")
     .description("Create a new project")
-    .action(async (projectName, repoUrl) => {
-      generateProject(projectName, repoUrl);
+    .action(async (projectName) => {
+      generateProject(projectName);
     });

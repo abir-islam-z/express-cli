@@ -1,12 +1,18 @@
 import chalk from "chalk";
-import { program } from "commander";
 import fs from "fs-extra";
 import path from "path";
 import simpleGit from "simple-git";
 
 import ora from "ora";
 
-export const generateProject = async (projectName: string, repoUrl: string) => {
+export const generateProject = async (projectName: string) => {
+  const repoUrl = process.env.TEMPLATE_REPO_URL || ""; // Repository URL
+
+  if (!repoUrl) {
+    console.error(chalk.red("❌ REPO_URL not found in .env"));
+    return;
+  }
+
   const targetDir = path.join(process.cwd(), projectName); // Destination
 
   try {
@@ -51,5 +57,3 @@ const installDependencies = (targetDir: string) => {
     chalk.green(`🚀 Setup complete! Run "cd ${targetDir} && npm run dev"`)
   );
 };
-
-

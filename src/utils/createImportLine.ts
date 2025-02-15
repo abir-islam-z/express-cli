@@ -13,5 +13,5 @@ export const createImportLine = async (type: string, name: string) => {
   const fileName = fileNameFormat(name, type);
   const filePath = filePathFormat(name, type);
 
-  return `import ${fileName} from "../modules/${filePath}}.route";`;
+  return `import {${fileName}} from "../modules/${filePath}}.route";`;
 };

@@ -4,7 +4,7 @@ import { initNewCommand } from "./commands";
 import { initGenerateCommand } from "./commands/generate";
 
 config();
-initGenerateCommand();
 initNewCommand();
+initGenerateCommand();
 
 program.parse(process.argv);
