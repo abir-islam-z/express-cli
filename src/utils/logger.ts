@@ -1,18 +1,40 @@
-import { ERROR_LOG_DIR } from '@/const';
-import { existsSync, mkdirSync } from 'fs';
-import { join } from 'path';
+import { ERROR_LOG_PATH } from '@/const';
+import fs from 'fs-extra';
 import winston from 'winston';
 import winstonDaily from 'winston-daily-rotate-file';
 
-// logs dir
-const logDir: string = join(__dirname, ERROR_LOG_DIR);
+import { TransformableInfo as WinstonTransformableInfo } from 'logform';
 
-if (!existsSync(logDir)) {
-  mkdirSync(logDir);
+interface TransformableInfo extends WinstonTransformableInfo {
+  timestamp: string;
+  level: string;
+  message: any;
 }
 
-// Define log format
-const logFormat = winston.format.printf(({ timestamp, level, message }) => `${timestamp} ${level}: ${message}`);
+// Ensure logs directory exists
+try {
+  if (!fs.existsSync(ERROR_LOG_PATH)) {
+    fs.mkdirSync(ERROR_LOG_PATH, { recursive: true });
+  }
+} catch (error) {
+  console.error(`Failed to create log directory: ${error instanceof Error ? error.message : 'Unknown error'}`);
+  process.exit(1);
+}
+
+const stream = {
+  write: (message: string): void => {
+    logger.info(message.substring(0, message.lastIndexOf('\n')));
+  },
+};
+
+// Add this interface to handle the type mismatch
+
+const logFormat = winston.format.printf((info: TransformableInfo) => {
+  const message = typeof info.message === 'string'
+    ? info.message
+    : JSON.stringify(info.message);
+  return `${info.timestamp} ${info.level}: ${message}`;
+});
 
 /*
  * Log Level
@@ -30,7 +52,7 @@ const logger = winston.createLogger({
     new winstonDaily({
       level: 'debug',
       datePattern: 'YYYY-MM-DD',
-      dirname: `${logDir}/debug`, // log file /logs/debug/*.log in save
+      dirname: `${ERROR_LOG_PATH}/debug`, // log file /logs/debug/*.log in save
       filename: '%DATE%.log',
       maxFiles: 30, // 30 Days saved
       json: false,
@@ -40,26 +62,39 @@ const logger = winston.createLogger({
     new winstonDaily({
       level: 'error',
       datePattern: 'YYYY-MM-DD',
-      dirname: ` ${logDir} /error`, // log file /logs/error/*.log in save
+      dirname: `${ERROR_LOG_PATH}/error`, // log file /logs/error/*.log in save
       filename: '%DATE%.log',
       maxFiles: 30, // 30 Days saved
       handleExceptions: true,
+      handleRejections: true,
       json: false,
       zippedArchive: true,
     }),
   ],
 });
 
-logger.add(
-  new winston.transports.Console({
-    format: winston.format.combine(winston.format.splat(), winston.format.colorize()),
-  })
-);
+// Add console transport in non-production environments
+if (process.env.NODE_ENV !== 'production') {
+  logger.add(
+    new winston.transports.Console({
+      format: winston.format.combine(
+        winston.format.splat(),
+        winston.format.colorize(),
+        winston.format.simple()
+      ),
+    })
+  );
+}
 
-const stream = {
-  write: (message: string) => {
-    logger.info(message.substring(0, message.lastIndexOf('\n')));
-  },
-};
+
+// Handle uncaught errors
+process.on('uncaughtException', (error) => {
+  logger.error('Uncaught Exception:', error);
+  process.exit(1);
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+  logger.error('Unhandled Rejection at:', promise, 'reason:', reason);
+});
 
 export { logger, stream };

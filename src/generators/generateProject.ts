@@ -1,4 +1,5 @@
 import { logger } from '@/utils/logger';
+import chalk from 'chalk';
 import { execSync } from 'child_process';
 import fs from 'fs-extra';
 import ora from 'ora';
@@ -49,6 +50,9 @@ const installDependencies = async (targetDir: string) => {
     const spinner = ora('Installing dependencies...').start();
     execSync(`cd ${targetDir} && npm install`, { stdio: 'inherit' });
     spinner.succeed('Installed dependencies');
+    console.log(chalk.green('🚀 Project ready!'));
+    // show message to cd into the project
+    console.log(chalk.cyan(`cd ${targetDir}`));
   } catch (error) {
     logger.error('❌ Error reading package.json:', error);
     exit(1);

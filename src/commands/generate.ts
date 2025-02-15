@@ -1,11 +1,9 @@
 import { APP_FILE_PATH, SERVER_FILE_PATH, SOURCE_DIR_PATH } from '@/const';
 import { generateByType } from '@/generators/generateByType';
 import { generateModule } from '@/generators/generateModule';
-import {logger} from '@/utils/logger';
 import chalk from 'chalk';
 import { program } from 'commander';
 import fs from 'fs';
-import { exit } from 'process';
 
 export const initGenerateCommand = () => {
   const generateCommand = program.command('generate').alias('g');
@@ -20,8 +18,8 @@ export const initGenerateCommand = () => {
     const isServerFileExists = fs.existsSync(SERVER_FILE_PATH);
 
     if (!isSrcDirExists || !isAppFileExists || !isServerFileExists) {
-      logger.error(chalk.red('❌ Error: Project structure not found. Please create a new project using the "new" command'));
-      exit(1);
+      console.log(chalk.red('❌ Error: Project structure not found. Please create a new project using the "new" command'));
+      return;
     }
     if (type === 'module' || type === 'mo') {
       generateModule(name);
