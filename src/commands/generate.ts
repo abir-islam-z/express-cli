@@ -1,6 +1,5 @@
 import { APP_FILE_PATH, SERVER_FILE_PATH, SOURCE_DIR_PATH } from '@/const';
-import { generateByType } from '@/generators/generateByType';
-import { generateModule } from '@/generators/generateModule';
+import { generateByType, generateModule } from '@/generators';
 import chalk from 'chalk';
 import { program } from 'commander';
 import fs from 'fs';

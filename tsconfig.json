@@ -6,12 +6,21 @@
     "declaration": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
+    "skipLibCheck": true,
     "rootDir": "src",
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": [
+        "src/*"
+      ]
     }
   },
-  "include": ["src", "templates"],
-  "exclude": ["node_modules", "dist"]
+  "include": [
+    "src",
+    "templates"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
 }

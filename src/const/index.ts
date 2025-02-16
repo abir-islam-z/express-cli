@@ -1,5 +1,7 @@
 import path from 'path';
 
+// template repo url
+export const TEMPLATE_REPO_URL = 'https://github.com/abir-islam-z/nodejs-boilerplate.git';
 // Directories
 export const SOURCE_DIR = 'src';
 export const APP_DIR = 'app';

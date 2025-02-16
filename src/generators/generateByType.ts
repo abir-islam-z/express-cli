@@ -18,7 +18,7 @@ export const generateByType = async (type: string, name: string) => {
   const spinner = ora('Generating file').start();
 
   // ? check if schematic exists
-  const isExistinSchematic = schematics[type];
+  const isExistinSchematic = Object.hasOwn(schematics, type);
 
   if (!isExistinSchematic) {
     spinner.fail(chalk.red('Schematic not found'));

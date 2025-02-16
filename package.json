@@ -1,13 +1,14 @@
 {
-  "name": "mycli",
+  "name": "express-modular-cli",
   "version": "1.0.0",
-  "description": "My Express CLI",
+  "description": "A CLI tool to generate modular express project",
   "main": "dist/index.js",
   "bin": {
-    "ex-ph": "./dist/index.js"
+    "ex-cli": "./dist/index.js"
   },
   "scripts": {
     "build": "tsc",
+    "postbuild": "bun ./src/scripts/copyTemplates.ts",
     "start": "node dist/index.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
@@ -28,7 +29,6 @@
     "@types/bun": "latest",
     "@types/ejs": "^3.1.5",
     "@types/fs-extra": "^11.0.4",
-    "@types/node": "^22.13.4",
     "eslint": "^9.20.1",
     "eslint-plugin-prettier": "^5.2.3",
     "eslint-plugin-security": "^3.0.1",

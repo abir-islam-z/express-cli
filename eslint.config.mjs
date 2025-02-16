@@ -1,6 +1,5 @@
 import pluginJs from '@eslint/js';
 import prettier from 'eslint-plugin-prettier';
-import securityPlugin from 'eslint-plugin-security';
 import unicornPlugin from 'eslint-plugin-unicorn';
 import globals from 'globals';
 import tsPlugin from 'typescript-eslint';
@@ -11,7 +10,6 @@ export default [
     ignores: ['node_modules', 'dist', 'build'],
   },
   // Security
-  securityPlugin.configs.recommended,
   {
     files: ['**/*.ts'],
   },
@@ -22,7 +20,7 @@ export default [
     rules: {
       'func-style': ['error', 'expression'],
       'no-restricted-syntax': ['off', 'ForOfStatement'],
-      'no-console': ['error'],
+      'no-console': ['off'],
       'prefer-template': 'error',
       quotes: ['error', 'single', { avoidEscape: true }],
       'security/detect-non-literal-fs-filename': 'off',
