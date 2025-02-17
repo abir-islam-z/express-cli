@@ -1,15 +1,18 @@
-import { ERROR_LOG_PATH } from '@/const';
 import fs from 'fs-extra';
+import path from 'path';
 import winston from 'winston';
 import winstonDaily from 'winston-daily-rotate-file';
 
 import { TransformableInfo as WinstonTransformableInfo } from 'logform';
 
-interface TransformableInfo extends WinstonTransformableInfo {
+// Error Logs Directory
+export const ERROR_LOG_PATH = path.join(__dirname, '..', 'logs');
+
+type TransformableInfo = {
   timestamp: string;
   level: string;
-  message: any;
-}
+  message: string;
+} & WinstonTransformableInfo;
 
 // Ensure logs directory exists
 try {
@@ -30,9 +33,7 @@ const stream = {
 // Add this interface to handle the type mismatch
 
 const logFormat = winston.format.printf((info: TransformableInfo) => {
-  const message = typeof info.message === 'string'
-    ? info.message
-    : JSON.stringify(info.message);
+  const message = typeof info.message === 'string' ? info.message : JSON.stringify(info.message);
   return `${info.timestamp} ${info.level}: ${message}`;
 });
 
@@ -77,15 +78,10 @@ const logger = winston.createLogger({
 if (process.env.NODE_ENV !== 'production') {
   logger.add(
     new winston.transports.Console({
-      format: winston.format.combine(
-        winston.format.splat(),
-        winston.format.colorize(),
-        winston.format.simple()
-      ),
+      format: winston.format.combine(winston.format.splat(), winston.format.colorize(), winston.format.simple()),
     })
   );
 }
-
 
 // Handle uncaught errors
 process.on('uncaughtException', (error) => {

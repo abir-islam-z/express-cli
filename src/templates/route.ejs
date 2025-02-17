@@ -1,32 +1,32 @@
 import { Router } from 'express';
-import { <%= name %>Controller } from './<%= name %>.controller';
+import { <%= m_name %>Controller } from './<%= name %>.controller';
 
 const router = Router();
 
 router.post(
   '/register',
-  <%= name %>Controller.create,
+  <%= m_name %>Controller.create,
 );
 
 router.get(
   '/',
-  <%= name %>Controller.findAll,
+  <%= m_name %>Controller.findAll,
 );
 
 router.get(
   '/:id',
-  <%= name %>Controller.findOne,
+  <%= m_name %>Controller.findOne,
 );
 
 router.patch(
   '/:id',
-  <%= name %>Controller.update,
+  <%= m_name %>Controller.update,
 );
 
 router.delete(
   '/:id',
-  <%= name %>Controller.remove,
+  <%= m_name %>Controller.remove,
 );
 
 
-export const <%= name %>Routes = router;
+export const <%= m_name %>Routes = router;

@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { TEMPLATE_REPO_URL } from '@/const';
 import { logger } from '@/utils/logger';
 import chalk from 'chalk';
