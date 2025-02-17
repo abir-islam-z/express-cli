@@ -21,7 +21,7 @@ export const SERVER_FILE_PATH = path.join(process.cwd(), SOURCE_DIR, 'server.ts'
 
 // Dir Paths
 export const SOURCE_DIR_PATH = path.join(process.cwd(), SOURCE_DIR);
-export const TEMPLATE_DIR_PATH = path.join(process.cwd(), TEMPLATE_DIR);
+export const TEMPLATE_DIR_PATH = path.join(process.cwd(), SOURCE_DIR, TEMPLATE_DIR);
 export const MODULES_DIR_PATH = path.join(process.cwd(), 'src', MODULE_DIR);
 
 // Error Logs Directory

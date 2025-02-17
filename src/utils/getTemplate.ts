@@ -1,6 +1,6 @@
+import { TEMPLATE_DIR_PATH } from '@/const';
 import fs from 'fs-extra';
 import path from 'path';
-import { TEMPLATE_DIR_PATH } from '../const';
 import { logger } from './logger';
 
 /**
@@ -11,24 +11,17 @@ import { logger } from './logger';
  */
 export const getTemplate = async (name: string): Promise<string | undefined> => {
   try {
-    // Validate template name - only allow alphanumeric chars, dash and underscore
-    if (!/^[\w-]+$/.test(name)) {
+    // Validate template name - only allow letters
+    if (!/^[a-zA-Z]+$/.test(name)) {
       throw new Error('Invalid template name');
     }
 
-    // Normalize and resolve the path for security
-    const normalizedPath = path.normalize(`${name}.ejs`);
-    const templatePath = path.resolve(TEMPLATE_DIR_PATH, normalizedPath);
+    const templatePath = path.join(TEMPLATE_DIR_PATH, `${name}.ejs`);
 
-    // Ensure the resolved path is within the templates directory
-    if (!templatePath.startsWith(path.resolve(TEMPLATE_DIR_PATH))) {
-      throw new Error('Invalid template path');
-    }
-
-    const exists = await fs.pathExists(templatePath);
+    console.log(templatePath);
+    const exists = await fs.pathExists(TEMPLATE_DIR_PATH);
     if (!exists) {
-      logger.error(`No template found for "${name}"`);
-      return;
+      throw new Error(`Template directory not found for: ${name}`);
     }
 
     return templatePath;

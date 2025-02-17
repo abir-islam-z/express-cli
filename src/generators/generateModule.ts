@@ -51,8 +51,17 @@ const updateIndexRouteFile = async (name: string) => {
   // Replace the old moduleRoutes array content with the updated content
   const updatedIndexRouteContent = updatedContent.replace(moduleRoutesContent, updatedModuleRoutes);
 
-  // Write the updated index route content back to the file
-  await fs.writeFile(INDEX_ROUTE_PATH, updatedIndexRouteContent);
+  // get the project name from package.json and verify if it is cli or not
+  const packageJson = await fs.readJson('package.json');
+  const projectName = packageJson.name;
+  const isCli = projectName === 'express-modular-cli';
+
+  if (!isCli) {
+    await fs.ensureDir('src/app/routes');
+    await fs.writeFile('src/app/routes/index.ts', updatedIndexRouteContent);
+  } else {
+    logger.error('❌ Error: Project structure not found. Please create a new project using the "new" command');
+  }
 
   spinner.succeed(`Updated${INDEX_ROUTE_PATH}`);
 };
