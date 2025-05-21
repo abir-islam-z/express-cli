@@ -1,7 +1,7 @@
-import { I<%= m_name %> } from './<%= name %>.interface';
+import { T<%= m_name %> } from './<%= name %>.interface';
 import { <%= m_name %>Model } from './<%= name %>.model';
 
-const create = async (data: I<%= m_name %>) => {
+const create = async (data: T<%= m_name %>) => {
   return await <%= m_name %>Model.create(data);
 };
 
@@ -13,7 +13,7 @@ const findOne = async (id: string) => {
   return await <%= m_name %>Model.findById(id);
 };
 
-const update = async (id: string, data: Partial<I<%= m_name %>>) => {
+const update = async (id: string, data: Partial<T<%= m_name %>>) => {
   return await <%= m_name %>Model.findByIdAndUpdate(id, data, { new: true });
 };
 
