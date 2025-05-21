@@ -1,32 +1,61 @@
 import catchAsync from '../../utils/catchAsync';
 import { <%= m_name %>Service } from './<%= name %>.service';
+import { sendResponse } from '@/app/utils/sendResponse';
 
 const create = catchAsync(async (req, res) => {
   const result = await <%= m_name %>Service.create(req.body);
-  res.status(201).json({ data: result });
+
+  sendResponse(res, {
+    statusCode: 201,
+    success: true,
+    message: '<%= m_name %> created successfully',
+    data: result,
+  });
 });
 
 const findAll = catchAsync(async (_req, res) => {
-  const result = await <%= m_name %>Service.getAll();
-  res.status(200).json({ data: result });
+  const result = await <%= m_name %>Service.findAll();
+
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: '<%= m_name %> retrieved successfully',
+    data: result,
+  });
 });
 
 const findOne = catchAsync(async (req, res) => {
-  const result = await <%= m_name %>Service.get<%= name %>ById(req.params.id);
-  res.status(200).json({ data: result });
+  const result = await <%= m_name %>Service.findOne(req.params.id);
+
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: '<%= m_name %> retrieved successfully',
+    data: result,
+  });
 });
 
 const update = catchAsync(async (req, res) => {
   const result = await <%= m_name %>Service.update(req.params.id, req.body);
 
-  res.status(200).json({ data: result });
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: '<%= m_name %> updated successfully',
+    data: result,
+  });
 });
 
 
 const remove = catchAsync(async (req, res) => {
-  const result = await <%= m_name %>Service.remove(req.params.id);
+  await <%= m_name %>Service.remove(req.params.id);
 
-  res.status(204).json({ data: result });
+  sendResponse(res, {
+    statusCode: 204,
+    success: true,
+    message: '<%= m_name %> deleted successfully',
+    data: {},
+  });
 });
 
 export const <%= m_name %>Controller = {
@@ -35,4 +64,4 @@ export const <%= m_name %>Controller = {
     findOne,
     update,
     remove,
-}
+};

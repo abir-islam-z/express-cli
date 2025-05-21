@@ -1,7 +1,16 @@
-impport {z} from 'zod';
+import {z} from 'zod';
 
-export const <%= name %>validation = z.object({
-  body : z.object({
+const <%= name %>Create = z.object({
     // Add your validation here
   })
-});
+
+const <%= name %>Update = <%= name %>Create.partial();
+
+
+// Add more validation if needed
+// Example: const <%= name %>Delete = z.object({ id: z.string().uuid() });
+
+export const <%= name.charAt(0).toUpperCase()+name.slice(1) %>Validation = {
+  <%= name %>Create,
+  <%= name %>Update,
+}

@@ -3,7 +3,5 @@
     "dbaeumer.vscode-eslint",
     "eamodio.gitlens",
     "usernamehw.errorlens",
-    "lacroixdavid1.vscode-format-context-menu",
-    "kisstkondoros.vscode-codemetrics",
   ]
 }

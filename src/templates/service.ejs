@@ -18,7 +18,7 @@ const update = async (id: string, data: Partial<I<%= m_name %>>) => {
 };
 
 const remove = async (id: string) => {
-  return await <%= m_name %>Model.findByIdAndDelete(id);
+  await <%= m_name %>Model.findByIdAndDelete(id);
 };
 
 export const <%= m_name %>Service = {
