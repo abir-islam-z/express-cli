@@ -2,6 +2,5 @@
   "recommendations": [
     "dbaeumer.vscode-eslint",
     "eamodio.gitlens",
-    "usernamehw.errorlens",
   ]
 }
