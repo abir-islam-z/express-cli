@@ -1,0 +1,37 @@
+# Source files (only include compiled dist)
+src/
+tsconfig.json
+eslint.config.mjs
+
+# Development files
+*.log
+logs/
+node_modules/
+.git/
+.gitignore
+
+# Lock files
+package-lock.json
+bun.lockb
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Test files
+test/
+tests/
+__tests__/
+*.test.js
+*.test.ts
+*.spec.js
+*.spec.ts
+
+# Documentation (keep README.md)
+docs/

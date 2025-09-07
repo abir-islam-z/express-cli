@@ -1,5 +1,5 @@
-import { logger } from '@/utils/logger';
-import { updateIndexRoute } from '@/utils/updateIndexRoute';
+import { logger } from '../utils/logger';
+import { updateIndexRoute } from '../utils/updateIndexRoute';
 import { generateByType } from './generateByType';
 
 const filesToCreate = ['controller', 'model', 'route', 'service', 'interface', 'validation'];

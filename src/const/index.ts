@@ -32,6 +32,7 @@ export const SOURCE_DIR = 'src';
 export const APP_DIR = 'app';
 export const MODULE_DIR = 'modules';
 export const ROUTE_DIR = 'routes';
+export const TEMPLATE_DIR = 'templates';
 
 // route file name
 export const ROUTE_FILE_NAME = 'index.ts';

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
-import { SOURCE_DIR, TEMPLATE_DIR } from '@/const';
 import { copy } from 'fs-extra';
 import { join } from 'path';
+import { SOURCE_DIR, TEMPLATE_DIR } from '../const';
 
 (async () => {
   try {

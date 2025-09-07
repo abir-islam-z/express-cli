@@ -2,14 +2,16 @@
   "name": "express-modular-cli",
   "version": "1.0.0",
   "description": "A CLI tool to generate modular express project",
-  "main": "src/index.ts",
+  "main": "dist/index.js",
   "bin": {
-    "ex-cli": "./src/index.ts"
+    "exm-cli": "./dist/index.js"
   },
   "scripts": {
-    "start": "bun src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "prepublishOnly": "npm run build"
   },
   "dependencies": {
     "chalk": "^5.4.1",
@@ -24,14 +26,36 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.20.0",
-    "@types/bun": "latest",
     "@types/ejs": "^3.1.5",
     "@types/fs-extra": "^11.0.4",
+    "@types/node": "^20.0.0",
     "eslint": "^9.20.1",
     "eslint-plugin-prettier": "^5.2.3",
     "eslint-plugin-security": "^3.0.1",
     "eslint-plugin-unicorn": "^56.0.1",
     "typescript": "^5.7.3",
     "typescript-eslint": "^8.24.0"
+  },
+  "files": [
+    "dist",
+    "src/templates",
+    "README.md"
+  ],
+  "keywords": [
+    "express",
+    "cli",
+    "generator",
+    "typescript",
+    "modular",
+    "scaffolding"
+  ],
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "engines": {
+    "node": ">=16.0.0"
   }
 }

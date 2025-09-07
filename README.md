@@ -26,7 +26,7 @@ npm install -g express-modular-cli
 Create a new Express.js project with a modular structure:
 
 ```bash
-ex-cli new <project-name>
+exm-cli new <project-name>
 ```
 
 This command:
@@ -40,9 +40,9 @@ This command:
 Generate new components using:
 
 ```bash
-ex-cli generate <type> <name>
+exm-cli generate <type> <name>
 # or using the shorthand
-ex-cli g <type> <name>
+exm-cli g <type> <name>
 ```
 
 ### Available Component Types
@@ -62,7 +62,7 @@ ex-cli g <type> <name>
 When generating a complete module, it creates all necessary components:
 
 ```bash
-ex-cli g module user
+exm-cli g module user
 ```
 
 This creates:

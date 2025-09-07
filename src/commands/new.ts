@@ -1,5 +1,5 @@
-import { ProjectGenerator } from '@/generators';
 import { program } from 'commander';
+import { ProjectGenerator } from '../generators';
 
 export const initNewCommand = () =>
   program

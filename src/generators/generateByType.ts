@@ -1,11 +1,11 @@
-import { APP_DIR, MODULE_DIR, SOURCE_DIR } from '@/const';
-import { logger } from '@/utils/logger';
 import chalk from 'chalk';
 import ejs from 'ejs';
 import fs from 'fs-extra';
 import ora from 'ora';
 import path from 'path';
+import { APP_DIR, MODULE_DIR, SOURCE_DIR } from '../const';
 import { schematics } from '../schematics';
+import { logger } from '../utils/logger';
 
 /**
  *
@@ -24,7 +24,7 @@ export const generateByType = async (type: string, name: string) => {
 
   const spinner = ora(`Generating ${type} ${name}`).start();
   // ? check if schematic exists
-  const isExistinSchematic = Object.hasOwn(schematics, type);
+  const isExistinSchematic = Object.prototype.hasOwnProperty.call(schematics, type);
 
   if (!isExistinSchematic) {
     spinner.fail();

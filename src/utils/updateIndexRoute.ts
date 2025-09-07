@@ -1,7 +1,7 @@
-import { INDEX_ROUTE_PATH } from '@/const';
 import chalk from 'chalk';
 import fs from 'fs-extra';
 import ora from 'ora';
+import { INDEX_ROUTE_PATH } from '../const';
 import { logger } from './logger';
 
 export const updateIndexRoute = async (name: string) => {

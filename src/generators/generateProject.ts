@@ -1,11 +1,11 @@
-import { TEMPLATE_REPO_URL } from '@/const';
-import { logger } from '@/utils/logger';
 import chalk from 'chalk';
 import { execSync } from 'child_process';
 import fs from 'fs-extra';
 import ora from 'ora';
 import path from 'path';
 import simpleGit from 'simple-git';
+import { TEMPLATE_REPO_URL } from '../const';
+import { logger } from '../utils/logger';
 
 export class ProjectGenerator {
   private readonly projectName: string;
