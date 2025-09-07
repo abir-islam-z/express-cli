@@ -6,6 +6,7 @@ eslint.config.mjs
 # Development files
 *.log
 logs/
+dist/logs/
 node_modules/
 .git/
 .gitignore
@@ -35,3 +36,11 @@ __tests__/
 
 # Documentation (keep README.md)
 docs/
+
+# Build artifacts
+*.map
+*.tsbuildinfo
+
+# Temporary files
+*.tmp
+*.temp

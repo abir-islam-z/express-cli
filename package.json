@@ -1,10 +1,10 @@
 {
   "name": "express-modular-cli",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A CLI tool to generate modular express project",
   "main": "dist/index.js",
   "bin": {
-    "exm-cli": "./dist/index.js"
+    "exm-cli": "dist/index.js"
   },
   "scripts": {
     "build": "tsc",
@@ -14,15 +14,13 @@
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "chalk": "^5.4.1",
-    "commander": "^13.1.0",
+    "chalk": "^4.1.2",
+    "commander": "^9.4.1",
     "dotenv": "^16.4.7",
     "ejs": "^3.1.10",
     "fs-extra": "^11.3.0",
-    "ora": "^8.2.0",
-    "simple-git": "^3.27.0",
-    "winston": "^3.17.0",
-    "winston-daily-rotate-file": "^5.0.0"
+    "ora": "^5.4.1",
+    "simple-git": "^3.27.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.20.0",
