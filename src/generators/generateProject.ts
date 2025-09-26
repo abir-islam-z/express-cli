@@ -58,6 +58,7 @@ export class ProjectGenerator {
         // Update package.json with correct project name
         spinnerInstance.text = 'Configuring project...';
         await this.updatePackageJson();
+        await this.updateTsConfig();
 
         // Initialize fresh git repository
         spinnerInstance.text = 'Initializing git repository...';
@@ -101,6 +102,28 @@ export class ProjectGenerator {
       await fs.writeJson(packageJsonPath, packageJson, { spaces: 2 });
     } catch (error) {
       logger.error('❌ Error updating package.json:', error);
+      process.exit(1);
+    }
+  }
+
+  private async updateTsConfig(): Promise<void> {
+    const tsConfigPath = path.join(this.targetDir, 'tsconfig.json');
+    try {
+      const tsConfig = await fs.readJson(tsConfigPath);
+      if (!tsConfig) {
+        // If no tsconfig exists, skip this step
+        return;
+      }
+
+      // Remove path aliases to use relative imports
+      if (tsConfig.compilerOptions) {
+        delete tsConfig.compilerOptions.baseUrl;
+        delete tsConfig.compilerOptions.paths;
+      }
+
+      await fs.writeJson(tsConfigPath, tsConfig, { spaces: 2 });
+    } catch (error) {
+      logger.error('❌ Error updating tsconfig.json:', error);
       process.exit(1);
     }
   }

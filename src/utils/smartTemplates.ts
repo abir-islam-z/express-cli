@@ -63,9 +63,9 @@ export const templates = {
   controller: ({ name, m_name }: TemplateContext, projectContext: ProjectContext): string => {
     if (projectContext.hasCatchAsync && projectContext.hasSendResponse) {
       // Full project with utilities
-      return `import catchAsync from '@/app/utils/catchAsync';
+      return `import catchAsync from '../../utils/catchAsync';
 import { ${m_name}Service } from './${name}.service';
-import { sendResponse } from '@/app/utils/sendResponse';
+import { sendResponse } from '../../utils/sendResponse';
 
 const create = catchAsync(async (req, res) => {
   const result = await ${m_name}Service.create(req.body);
