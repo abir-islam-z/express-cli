@@ -1,10 +1,7 @@
 #!/usr/bin/env node
 
 import { program } from 'commander';
-import { config } from 'dotenv';
 import { initGenerateCommand, initNewCommand } from './commands';
-
-config();
 
 initNewCommand();
 initGenerateCommand();

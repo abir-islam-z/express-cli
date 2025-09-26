@@ -1,8 +1,0 @@
-import { model, Schema } from 'mongoose';
-import { T<%= m_name %> } from './<%= name %>.interface';
-
-const <%= name %>Schema = new Schema<T<%= m_name %>>({
-  name: String,
-});
-
-export const <%= m_name %>Model = model<T<%= m_name %>>('<%= name %>', <%= name %>Schema);

@@ -1,11 +1,11 @@
-import chalk from 'chalk';
-import fs from 'fs-extra';
-import ora from 'ora';
 import { INDEX_ROUTE_PATH } from '../const';
+import { colors } from './console';
+import * as fs from './fs';
 import { logger } from './logger';
+import spinner from './spinner';
 
 export const updateIndexRoute = async (name: string) => {
-  const spinner = ora('Updating index route file').start();
+  const spinnerInstance = spinner('Updating index route file').start();
   try {
     const indexRouteContent = await fs.readFile(INDEX_ROUTE_PATH, 'utf8');
     const lines = indexRouteContent.split('\n');
@@ -49,9 +49,9 @@ export const updateIndexRoute = async (name: string) => {
     await fs.ensureDir('src/app/routes');
     await fs.writeFile('src/app/routes/index.ts', updatedIndexRouteContent);
 
-    spinner.succeed(`${chalk.green('Updated')} src/app/routes/index.ts`);
+    spinnerInstance.succeed(`${colors.green('Updated')} src/app/routes/index.ts`);
   } catch (error) {
-    spinner.fail('Error updating index route file');
+    spinnerInstance.fail('Error updating index route file');
     logger.error('❌ Error: Could not update index route file', error);
     process.exit(1);
   }

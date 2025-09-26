@@ -1,11 +1,11 @@
-import chalk from 'chalk';
 import { execSync } from 'child_process';
-import fs from 'fs-extra';
-import ora from 'ora';
 import path from 'path';
-import simpleGit from 'simple-git';
 import { TEMPLATE_REPO_URL } from '../const';
+import { colors } from '../utils/console';
+import * as fs from '../utils/fs';
+import { simpleGit } from '../utils/git';
 import { logger } from '../utils/logger';
+import spinner from '../utils/spinner';
 
 export class ProjectGenerator {
   private readonly projectName: string;
@@ -31,14 +31,14 @@ export class ProjectGenerator {
         process.exit(1);
       }
 
-      const spinner = ora(`Creating project "${this.projectName}"...`).start();
+      const spinnerInstance = spinner(`Creating project "${this.projectName}"...`).start();
 
       // Create a temporary directory for cloning
       const tempDir = path.join(process.cwd(), `.temp-${this.projectName}-${Date.now()}`);
 
       try {
         // Clone the repository to temporary directory
-        spinner.text = 'Downloading template...';
+        spinnerInstance.text = 'Downloading template...';
         const git = simpleGit();
         await git.clone(repoUrl, tempDir, ['--depth', '1']); // Shallow clone
 
@@ -49,24 +49,24 @@ export class ProjectGenerator {
         }
 
         // Copy files to target directory
-        spinner.text = 'Setting up project structure...';
+        spinnerInstance.text = 'Setting up project structure...';
         await fs.copy(tempDir, this.targetDir);
 
         // Clean up temporary directory
         await fs.remove(tempDir);
 
         // Update package.json with correct project name
-        spinner.text = 'Configuring project...';
+        spinnerInstance.text = 'Configuring project...';
         await this.updatePackageJson();
 
         // Initialize fresh git repository
-        spinner.text = 'Initializing git repository...';
+        spinnerInstance.text = 'Initializing git repository...';
         const newGit = simpleGit(this.targetDir);
         await newGit.init();
         await newGit.add('.');
         await newGit.commit('Initial commit');
 
-        spinner.succeed(`Created project "${this.projectName}"`);
+        spinnerInstance.succeed(`Created project "${this.projectName}"`);
         await this.installDependencies();
       } catch (error) {
         // Clean up temp directory if it exists
@@ -114,11 +114,11 @@ export class ProjectGenerator {
         process.exit(1);
       }
 
-      const spinner = ora('Installing dependencies...').start();
+      const spinnerInstance = spinner('Installing dependencies...').start();
       execSync(`cd ${this.targetDir} && npm install`, { stdio: 'inherit' });
-      spinner.succeed('Installed dependencies');
-      console.log(chalk.green('🚀 Project ready!'));
-      console.log(chalk.cyan(`cd ${this.projectName}`));
+      spinnerInstance.succeed('Installed dependencies');
+      console.log(colors.green('🚀 Project ready!'));
+      console.log(colors.cyan(`cd ${this.projectName}`));
     } catch (error) {
       logger.error('❌ Error reading package.json:', error);
       process.exit(1);

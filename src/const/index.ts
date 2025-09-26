@@ -1,6 +1,6 @@
 import path from 'path';
 
-// template repo url
+// template repo url - now hardcoded since we removed dotenv
 export const TEMPLATE_REPO_URL = 'https://github.com/abir-islam-z/nodejs-boilerplate.git';
 // Directories
 /*
