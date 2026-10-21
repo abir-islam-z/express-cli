@@ -1,5 +1,7 @@
 # Express Modular CLI
 
+**Docs:** [abir-islam-z.github.io/express-cli](https://abir-islam-z.github.io/express-cli) ([roadmap](https://abir-islam-z.github.io/express-cli/roadmap.html))
+
 A powerful CLI tool for generating modular Express.js projects and components with TypeScript support.
 
 ## 📦 Installation
@@ -20,9 +22,8 @@ cd my-express-app
 ```
 
 This command will:
-- ✅ Create a complete Express.js project structure
-- ✅ Install all required dependencies
-- ✅ Initialize git repository with initial commit
+- ✅ Ask for Mongoose, Prisma, or Drizzle, then a database when Prisma or Drizzle is chosen
+- ✅ Write the project files locally
 - ✅ Set up TypeScript so Node.js can run the source directly
 - ✅ Configure `npm run dev` (`node --watch`) and `npm run start`
 
@@ -51,11 +52,22 @@ exm-cli new my-api
 ```
 
 **What it does:**
-- Downloads the latest Express.js boilerplate
-- Sets up modular project structure
-- Installs dependencies automatically
+- Prompts for a data layer: none, Mongoose, Prisma, or Drizzle
+- For Prisma or Drizzle, prompts for PostgreSQL, MySQL, or SQLite
+- For PostgreSQL, prompts for Supabase or a local database
+- For Supabase, offers to write the Cursor MCP config
+- Prompts for JWT authentication (Mongoose), a starter module, git, and `npm install`
+- Writes the selected files in the new directory
 - Configures TypeScript for Node's built-in type stripping
-- Initializes git repository
+
+Skip the questions with flags:
+
+```bash
+exm-cli new my-api --yes --mongo --auth --module product
+exm-cli new my-api --yes --orm prisma --database postgres --postgres supabase
+exm-cli new my-api --yes --orm drizzle --database sqlite
+exm-cli new my-api --dry-run
+```
 
 ### `generate <type> <name>` (alias: `g`)
 
@@ -71,6 +83,9 @@ exm-cli g service product
 
 # Generate a complete module (all files)
 exm-cli g module product
+
+# Print the files that would be written
+exm-cli g module product --dry-run
 ```
 
 ## 🧩 Component Types
@@ -275,11 +290,11 @@ const moduleRoutes = [
 
 ## 🛠️ Prerequisites
 
-- **Node.js**: 22.18.0 or newer. Type stripping is enabled by default from that version, and it is stable on Node.js 24.12 and 25.2.
+- **Node.js**: 18 or newer to run the CLI. Generated projects need 22.18 or newer, where TypeScript type stripping is on by default (stable on Node.js 24.12 and 25.2).
 - **npm**: Comes with Node.js
-- **Git**: Required for project creation (downloads boilerplate)
+- **Git**: Optional. Used only when you choose to initialize a repository
 
-Node.js will not run `.ts` files that live inside `node_modules`, so the published `exm-cli` command is compiled JavaScript. In a checkout of this repository, `npm run dev` runs `src/index.ts` directly.
+The CLI is plain JavaScript and has no dependencies.
 
 ## 🔍 Validation & Error Handling
 
@@ -338,10 +353,7 @@ git config --global user.email "your.email@example.com"
 ```
 
 ### Network Issues
-If project creation fails:
-- Check internet connection
-- Verify access to GitHub
-- Try again (temporary network issues)
+`npm install` needs a network connection. Project files are written locally, so `--no-install` still creates the project when the registry is unreachable.
 
 ## 💡 Tips & Best Practices
 

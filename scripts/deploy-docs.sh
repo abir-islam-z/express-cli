@@ -33,13 +33,16 @@ fi
 echo "Pushing branch $BRANCH..."
 git push -u origin "$BRANCH"
 
-echo "Running workflow: $WORKFLOW_NAME"
-if ! gh workflow run "$WORKFLOW_NAME" --ref "$BRANCH"; then
-  gh workflow run "$WORKFLOW_FILE" --ref "$BRANCH"
+echo "Waiting for the Pages workflow (triggered by push)..."
+sleep 3
+RUN_ID="$(gh run list --workflow="$WORKFLOW_FILE" --branch="$BRANCH" --limit 1 --json databaseId -q '.[0].databaseId')"
+if [[ -z "$RUN_ID" || "$RUN_ID" == "null" ]]; then
+  echo "No run found; starting workflow manually..."
+  gh workflow run "$WORKFLOW_NAME" --ref "$BRANCH" || gh workflow run "$WORKFLOW_FILE" --ref "$BRANCH"
+  sleep 3
+  RUN_ID="$(gh run list --workflow="$WORKFLOW_FILE" --branch="$BRANCH" --limit 1 --json databaseId -q '.[0].databaseId')"
 fi
 
-sleep 2
-RUN_ID="$(gh run list --workflow="$WORKFLOW_FILE" --branch="$BRANCH" --limit 1 --json databaseId -q '.[0].databaseId')"
 gh run watch "$RUN_ID" --exit-status
 
 URL="$(gh api "repos/${REPO}/pages" -q .html_url)"
