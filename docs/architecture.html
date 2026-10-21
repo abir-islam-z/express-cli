@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Architecture — Express Modular CLI</title>
+    <meta name="description" content="Generated Express project structure, #app path aliases, route registration, and validation rules." />
+    <link rel="canonical" href="https://abir-islam-z.github.io/express-cli/architecture.html" />
+    <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="site-header-inner">
+        <a class="brand" href="./"><span class="brand-mark" aria-hidden="true">exm</span> Express Modular CLI</a>
+        <div class="header-links">
+          <button type="button" class="menu-toggle" aria-expanded="false">Menu</button>
+          <a href="https://github.com/abir-islam-z/express-cli">GitHub</a>
+          <a class="btn-sm btn-sm-primary" href="https://www.npmjs.com/package/express-modular-cli">npm</a>
+        </div>
+      </div>
+    </header>
+    <div class="layout">
+      <aside class="sidebar" aria-label="Documentation">
+        <nav>
+          <div class="nav-group"><p class="nav-label">Start</p><ul>
+            <li><a data-nav="index.html" href="./index.html">Introduction</a></li>
+            <li><a data-nav="getting-started.html" href="./getting-started.html">Getting started</a></li>
+          </ul></div>
+          <div class="nav-group"><p class="nav-label">Reference</p><ul>
+            <li><a data-nav="commands.html" href="./commands.html">Commands &amp; flags</a></li>
+            <li><a data-nav="schematics.html" href="./schematics.html">Schematics</a></li>
+            <li><a data-nav="architecture.html" href="./architecture.html">Architecture</a></li>
+          </ul></div>
+          <div class="nav-group"><p class="nav-label">Guides</p><ul>
+            <li><a data-nav="guides.html" href="./guides.html">Examples &amp; troubleshooting</a></li>
+            <li><a data-nav="roadmap.html" href="./roadmap.html">Roadmap</a></li>
+          </ul></div>
+        </nav>
+      </aside>
+      <main class="content">
+        <div class="content-inner content-wide">
+          <h1 class="page-title">Architecture</h1>
+          <p class="page-intro">How generated projects are organized and how the CLI keeps imports consistent with Node’s ESM rules.</p>
+
+          <h2 id="structure">Project structure</h2>
+          <pre><code>my-api/
+├── src/
+│   ├── app/
+│   │   ├── modules/
+│   │   │   └── user/
+│   │   │       ├── user.controller.ts
+│   │   │       ├── user.service.ts
+│   │   │       ├── user.model.ts
+│   │   │       ├── user.route.ts
+│   │   │       ├── user.validation.ts
+│   │   │       └── user.interface.ts
+│   │   ├── routes/
+│   │   │   └── index.ts
+│   │   ├── middlewares/
+│   │   ├── config/
+│   │   ├── errors/
+│   │   └── utils/
+│   ├── app.ts
+│   └── server.ts
+├── package.json
+├── tsconfig.json
+└── .env.example</code></pre>
+          <p>Prisma adds <code>prisma/schema.prisma</code> and <code>src/app/db/</code>. Drizzle adds <code>drizzle.config.ts</code> and schema stubs.</p>
+
+          <h2 id="aliases">Path aliases (#app)</h2>
+          <p>Node does not read <code>tsconfig</code> <code>paths</code>. Cross-folder imports use <code>package.json</code> imports:</p>
+          <pre><code>{
+  "imports": {
+    "#app/*": "./src/app/*.ts"
+  }
+}</code></pre>
+          <pre><code>import catchAsync from '#app/utils/catchAsync';
+import type { TUser } from './user.interface.ts';
+import { UserService } from './user.service.ts';</code></pre>
+          <ul>
+            <li>Alias imports omit <code>.ts</code> (the map adds it).</li>
+            <li>Same-folder imports stay relative and include <code>.ts</code>.</li>
+            <li>Type-only imports use <code>import type</code> (Node ESM + <code>verbatimModuleSyntax</code>).</li>
+          </ul>
+
+          <h2 id="routes">Route registration</h2>
+          <p><code>src/app/routes/index.ts</code> aggregates module routers:</p>
+          <pre><code>import { UserRoutes } from '#app/modules/user/user.route';
+
+const moduleRoutes = [
+  { path: '/user', route: UserRoutes },
+];
+
+moduleRoutes.forEach(route => {
+  router.use(route.path, route.route);
+});</code></pre>
+          <p><code>g module</code> splices imports and entries into this file automatically.</p>
+
+          <h2 id="typescript">TypeScript on Node</h2>
+          <p>Generated apps use <code>noEmit</code> and run source directly:</p>
+          <pre><code>npm run dev    # node --watch src/server.ts
+npm run start  # node src/server.ts
+npm run typecheck</code></pre>
+
+          <h2 id="validation">Project validation</h2>
+          <p>Generators require <code>src/app</code>, <code>src/app/modules</code>, and <code>src/app/routes</code>. Otherwise you see an error suggesting <code>exm-cli new</code> first.</p>
+        </div>
+      </main>
+    </div>
+    <script src="./nav.js" defer></script>
+  </body>
+</html>

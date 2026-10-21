@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Schematics — Express Modular CLI</title>
+    <meta name="description" content="What each exm-cli schematic generates: controller, service, model, route, validation, interface, module." />
+    <link rel="canonical" href="https://abir-islam-z.github.io/express-cli/schematics.html" />
+    <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="site-header-inner">
+        <a class="brand" href="./"><span class="brand-mark" aria-hidden="true">exm</span> Express Modular CLI</a>
+        <div class="header-links">
+          <button type="button" class="menu-toggle" aria-expanded="false">Menu</button>
+          <a href="https://github.com/abir-islam-z/express-cli">GitHub</a>
+          <a class="btn-sm btn-sm-primary" href="https://www.npmjs.com/package/express-modular-cli">npm</a>
+        </div>
+      </div>
+    </header>
+    <div class="layout">
+      <aside class="sidebar" aria-label="Documentation">
+        <nav>
+          <div class="nav-group"><p class="nav-label">Start</p><ul>
+            <li><a data-nav="index.html" href="./index.html">Introduction</a></li>
+            <li><a data-nav="getting-started.html" href="./getting-started.html">Getting started</a></li>
+          </ul></div>
+          <div class="nav-group"><p class="nav-label">Reference</p><ul>
+            <li><a data-nav="commands.html" href="./commands.html">Commands &amp; flags</a></li>
+            <li><a data-nav="schematics.html" href="./schematics.html">Schematics</a></li>
+            <li><a data-nav="architecture.html" href="./architecture.html">Architecture</a></li>
+          </ul></div>
+          <div class="nav-group"><p class="nav-label">Guides</p><ul>
+            <li><a data-nav="guides.html" href="./guides.html">Examples &amp; troubleshooting</a></li>
+            <li><a data-nav="roadmap.html" href="./roadmap.html">Roadmap</a></li>
+          </ul></div>
+        </nav>
+      </aside>
+      <main class="content">
+        <div class="content-inner content-wide">
+          <h1 class="page-title">Schematics</h1>
+          <p class="page-intro">Each schematic adds a file under <code>src/app/modules/&lt;name&gt;/</code> unless noted.</p>
+
+          <h2 id="module">module</h2>
+          <p>Runs all schematics below and updates the route index.</p>
+          <pre><code>exm-cli g module user</code></pre>
+          <ul>
+            <li><code>user.controller.ts</code> — CRUD handlers with <code>catchAsync</code> and <code>sendResponse</code></li>
+            <li><code>user.service.ts</code> — business logic layer</li>
+            <li><code>user.model.ts</code> — Mongoose schema (Mongoose projects)</li>
+            <li><code>user.route.ts</code> — Express router wired to controller</li>
+            <li><code>user.validation.ts</code> — Zod schemas</li>
+            <li><code>user.interface.ts</code> — TypeScript types</li>
+          </ul>
+
+          <h2 id="controller">controller</h2>
+          <p>HTTP layer: create, read, update, delete stubs with consistent responses and <code>routeParam</code> for Express 5 params.</p>
+
+          <h2 id="service">service</h2>
+          <p>Data access and domain logic, typed against the module interface.</p>
+
+          <h2 id="model">model</h2>
+          <p>Mongoose model and schema. Not used for Prisma/Drizzle projects (edit schema files there instead).</p>
+
+          <h2 id="route">route</h2>
+          <p>REST-style paths bound to controller methods. Register manually or use <code>g module</code> for auto-registration.</p>
+
+          <h2 id="validation">validation</h2>
+          <p>Zod objects for body and params, ready for <code>validateRequest</code> middleware in auth-enabled projects.</p>
+
+          <h2 id="interface">interface</h2>
+          <p>DTOs and document types shared across service and controller.</p>
+
+          <h2 id="context">Context-aware templates</h2>
+          <p>Inside a project, generated code imports <code>#app/utils/catchAsync</code> and other shared utilities. Outside a project, templates can inline minimal helpers (standalone mode).</p>
+        </div>
+      </main>
+    </div>
+    <script src="./nav.js" defer></script>
+  </body>
+</html>

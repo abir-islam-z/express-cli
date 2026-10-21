@@ -4,82 +4,85 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Roadmap — Express Modular CLI</title>
-    <meta
-      name="description"
-      content="Planned features for express-modular-cli: decorators, NestJS-style templates, configurable schematics, and more."
-    />
-    <meta name="robots" content="index, follow" />
+    <meta name="description" content="Planned features: NestJS-style decorators, template packs, Prisma/Drizzle generators, and more." />
     <link rel="canonical" href="https://abir-islam-z.github.io/express-cli/roadmap.html" />
-    <meta property="og:title" content="Roadmap — Express Modular CLI" />
-    <meta property="og:url" content="https://abir-islam-z.github.io/express-cli/roadmap.html" />
     <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
-    <header>
-      <div class="wrap">
-        <p class="site-title"><a href="./">Express Modular CLI</a></p>
-        <nav aria-label="Documentation">
-          <a href="./">Overview</a>
-          <a href="./roadmap.html" aria-current="page">Roadmap</a>
-          <a href="https://github.com/abir-islam-z/express-cli/blob/main/README.md">README</a>
-          <a href="https://www.npmjs.com/package/express-modular-cli">npm</a>
+    <header class="site-header">
+      <div class="site-header-inner">
+        <a class="brand" href="./"><span class="brand-mark" aria-hidden="true">exm</span> Express Modular CLI</a>
+        <div class="header-links">
+          <button type="button" class="menu-toggle" aria-expanded="false">Menu</button>
           <a href="https://github.com/abir-islam-z/express-cli">GitHub</a>
-        </nav>
+          <a class="btn-sm btn-sm-primary" href="https://www.npmjs.com/package/express-modular-cli">npm</a>
+        </div>
       </div>
     </header>
+    <div class="layout">
+      <aside class="sidebar" aria-label="Documentation">
+        <nav>
+          <div class="nav-group"><p class="nav-label">Start</p><ul>
+            <li><a data-nav="index.html" href="./index.html">Introduction</a></li>
+            <li><a data-nav="getting-started.html" href="./getting-started.html">Getting started</a></li>
+          </ul></div>
+          <div class="nav-group"><p class="nav-label">Reference</p><ul>
+            <li><a data-nav="commands.html" href="./commands.html">Commands &amp; flags</a></li>
+            <li><a data-nav="schematics.html" href="./schematics.html">Schematics</a></li>
+            <li><a data-nav="architecture.html" href="./architecture.html">Architecture</a></li>
+          </ul></div>
+          <div class="nav-group"><p class="nav-label">Guides</p><ul>
+            <li><a data-nav="guides.html" href="./guides.html">Examples &amp; troubleshooting</a></li>
+            <li><a data-nav="roadmap.html" href="./roadmap.html">Roadmap</a></li>
+          </ul></div>
+        </nav>
+      </aside>
+      <main class="content">
+        <div class="content-inner">
+          <h1 class="page-title">Roadmap</h1>
+          <p class="page-intro">Planned improvements. Order may change. Track and propose work on <a href="https://github.com/abir-islam-z/express-cli/issues">GitHub issues</a>.</p>
 
-    <main class="wrap">
-      <h1>Roadmap</h1>
-      <p class="muted">Planned work. Order and scope may change. Track issues on GitHub.</p>
+          <h2>Templates &amp; architecture</h2>
+          <ul>
+            <li>
+              <strong>NestJS-style optional template</strong> — Modules with decorators (<code>@Module</code>,
+              <code>@Controller</code>, <code>@Injectable</code>) and HTTP decorators (<code>@Get</code>,
+              <code>@Post</code>) while still running on Express.
+            </li>
+            <li>
+              <strong>Lightweight decorator routing</strong> — Class controllers with a small registry, without a full DI
+              container.
+            </li>
+            <li><strong><code>cli.json</code> profiles</strong> — Configurable paths, naming, and default schematics.</li>
+            <li><strong>Template packs</strong> — REST, CQRS sketch, or service stubs installable at <code>new</code> time.</li>
+          </ul>
 
-      <h2>Architecture and templates</h2>
-      <ul>
-        <li>
-          <strong>NestJS-style optional template</strong> — Generate modules with decorators (<code>@Module</code>,
-          <code>@Controller</code>, <code>@Injectable</code>) and route decorators (<code>@Get</code>, <code>@Post</code>)
-          while staying on Express under the hood, for teams that want that ergonomics without switching frameworks.
-        </li>
-        <li>
-          <strong>Decorator-based routing (lightweight)</strong> — Smaller alternative: class controllers with method
-          decorators and a single registry, without a full Nest-like DI container.
-        </li>
-        <li>
-          <strong><code>cli.json</code> project profile</strong> — Custom module paths, file naming, and which
-          schematics run by default instead of hard-coded <code>src/app/modules</code>.
-        </li>
-        <li>
-          <strong>Template packs</strong> — Installable template bundles (REST only, CQRS sketch, microservice stub)
-          selected at <code>new</code> or via <code>exm-cli template add</code>.
-        </li>
-      </ul>
+          <h2>Data &amp; auth</h2>
+          <ul>
+            <li>Module generators for Prisma and Drizzle (today: Mongoose only for <code>g module</code>).</li>
+            <li>Additional auth patterns beyond JWT + Mongoose.</li>
+            <li>Richer Supabase onboarding in generated READMEs (migrations, RLS pointers).</li>
+          </ul>
 
-      <h2>Data and auth</h2>
-      <ul>
-        <li>Prisma and Drizzle module generators (not only Mongoose <code>g module</code>).</li>
-        <li>Optional auth strategies beyond JWT + Mongoose (session, OAuth hooks).</li>
-        <li>Better first-run docs for Supabase (migrations, RLS pointers) in generated README.</li>
-      </ul>
+          <h2>Developer experience</h2>
+          <ul>
+            <li>Test schematics (controller/service tests).</li>
+            <li>OpenAPI export from route modules.</li>
+            <li><code>exm-cli doctor</code> for Node version, aliases, and env checks.</li>
+            <li>Stable JSON output for <code>--dry-run</code> in CI and agents.</li>
+          </ul>
 
-      <h2>Developer experience</h2>
-      <ul>
-        <li>Schematics for tests (controller/service tests with a chosen runner).</li>
-        <li>OpenAPI export from route modules.</li>
-        <li><code>exm-cli doctor</code> — Check Node version, <code>#app</code> imports, and env vars.</li>
-        <li>Non-interactive CI mode improvements (stable JSON plan output for agents).</li>
-      </ul>
-
-      <h2>Done recently</h2>
-      <ul>
-        <li>Local project scaffold (no template git clone).</li>
-        <li>Interactive <code>new</code> and <code>--dry-run</code>.</li>
-        <li>Mongoose, Prisma, and Drizzle; Supabase Postgres + optional MCP config.</li>
-        <li>Plain JS CLI with zero runtime dependencies.</li>
-      </ul>
-
-      <footer>
-        <p>Suggest a feature: <a href="https://github.com/abir-islam-z/express-cli/issues">GitHub issues</a></p>
-      </footer>
-    </main>
+          <h2>Recently shipped</h2>
+          <ul>
+            <li>Local scaffold (no template repository clone).</li>
+            <li>Interactive <code>new</code>, <code>--dry-run</code>, and flag-based setup.</li>
+            <li>Mongoose, Prisma, Drizzle; Supabase Postgres and optional MCP config.</li>
+            <li>Zero runtime dependencies in the CLI; plain JavaScript distribution.</li>
+          </ul>
+        </div>
+      </main>
+    </div>
+    <script src="./nav.js" defer></script>
   </body>
 </html>

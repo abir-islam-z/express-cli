@@ -1,6 +1,6 @@
 # Express Modular CLI
 
-**Docs:** [abir-islam-z.github.io/express-cli](https://abir-islam-z.github.io/express-cli) ([roadmap](https://abir-islam-z.github.io/express-cli/roadmap.html))
+**Documentation:** [abir-islam-z.github.io/express-cli](https://abir-islam-z.github.io/express-cli) — [getting started](https://abir-islam-z.github.io/express-cli/getting-started.html), [commands](https://abir-islam-z.github.io/express-cli/commands.html), [architecture](https://abir-islam-z.github.io/express-cli/architecture.html), [guides](https://abir-islam-z.github.io/express-cli/guides.html), [roadmap](https://abir-islam-z.github.io/express-cli/roadmap.html)
 
 A powerful CLI tool for generating modular Express.js projects and components with TypeScript support.
 

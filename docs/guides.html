@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Examples &amp; troubleshooting — Express Modular CLI</title>
+    <meta name="description" content="Example workflows, best practices, and troubleshooting for express-modular-cli." />
+    <link rel="canonical" href="https://abir-islam-z.github.io/express-cli/guides.html" />
+    <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="site-header-inner">
+        <a class="brand" href="./"><span class="brand-mark" aria-hidden="true">exm</span> Express Modular CLI</a>
+        <div class="header-links">
+          <button type="button" class="menu-toggle" aria-expanded="false">Menu</button>
+          <a href="https://github.com/abir-islam-z/express-cli">GitHub</a>
+          <a class="btn-sm btn-sm-primary" href="https://www.npmjs.com/package/express-modular-cli">npm</a>
+        </div>
+      </div>
+    </header>
+    <div class="layout">
+      <aside class="sidebar" aria-label="Documentation">
+        <nav>
+          <div class="nav-group"><p class="nav-label">Start</p><ul>
+            <li><a data-nav="index.html" href="./index.html">Introduction</a></li>
+            <li><a data-nav="getting-started.html" href="./getting-started.html">Getting started</a></li>
+          </ul></div>
+          <div class="nav-group"><p class="nav-label">Reference</p><ul>
+            <li><a data-nav="commands.html" href="./commands.html">Commands &amp; flags</a></li>
+            <li><a data-nav="schematics.html" href="./schematics.html">Schematics</a></li>
+            <li><a data-nav="architecture.html" href="./architecture.html">Architecture</a></li>
+          </ul></div>
+          <div class="nav-group"><p class="nav-label">Guides</p><ul>
+            <li><a data-nav="guides.html" href="./guides.html">Examples &amp; troubleshooting</a></li>
+            <li><a data-nav="roadmap.html" href="./roadmap.html">Roadmap</a></li>
+          </ul></div>
+        </nav>
+      </aside>
+      <main class="content">
+        <div class="content-inner content-wide">
+          <h1 class="page-title">Examples &amp; troubleshooting</h1>
+          <p class="page-intro">Common workflows and fixes when something does not work as expected.</p>
+
+          <h2 id="blog">Blog API</h2>
+          <pre><code>exm-cli new blog-api --yes --mongo
+cd blog-api
+exm-cli g module user
+exm-cli g module post
+exm-cli g module comment
+npm install && npm run dev</code></pre>
+
+          <h2 id="ecommerce">E-commerce API</h2>
+          <pre><code>exm-cli new shop-api --yes --mongo --module product
+cd shop-api
+exm-cli g module category
+exm-cli g module order
+exm-cli g module cart</code></pre>
+
+          <h2 id="supabase">Supabase + Prisma</h2>
+          <pre><code>exm-cli new api --yes --orm prisma --database postgres --postgres supabase
+cd api
+# Fill DATABASE_URL and DIRECT_URL in .env from Supabase dashboard
+npm install
+npx prisma migrate dev</code></pre>
+          <p>Enable the Supabase MCP server in Cursor when <code>.cursor/mcp.json</code> is present, then complete OAuth in the browser.</p>
+
+          <h2 id="practices">Best practices</h2>
+          <ul>
+            <li>Create the project before running <code>g</code> commands from that directory.</li>
+            <li>Prefer <code>g module</code> over generating six files by hand.</li>
+            <li>Use singular module names (<code>user</code>, not <code>users</code>) for consistent class names.</li>
+            <li>Use <code>--dry-run</code> in scripts and agents before writing files.</li>
+          </ul>
+
+          <h2 id="troubleshooting">Troubleshooting</h2>
+          <h3>Command not found</h3>
+          <pre><code>npm list -g express-modular-cli
+npm install -g express-modular-cli</code></pre>
+
+          <h3>Not in a valid Express project</h3>
+          <p>Run generators from the project root that contains <code>src/app/modules</code>. Create one with <code>exm-cli new</code> first.</p>
+
+          <h3>Component already exists</h3>
+          <p>Pick a new name or remove the existing files under <code>src/app/modules/&lt;name&gt;</code>.</p>
+
+          <h3>npm install fails offline</h3>
+          <p>Use <code>--no-install</code> when creating the project, then install when you have network access.</p>
+
+          <h3>Permission errors (global install)</h3>
+          <pre><code>npm config set prefix ~/.local
+# ensure ~/.local/bin is on your PATH</code></pre>
+        </div>
+      </main>
+    </div>
+    <script src="./nav.js" defer></script>
+  </body>
+</html>

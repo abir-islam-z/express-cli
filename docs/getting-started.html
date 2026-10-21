@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Getting started — Express Modular CLI</title>
+    <meta name="description" content="Install exm-cli, create your first Express TypeScript project, and generate modules." />
+    <link rel="canonical" href="https://abir-islam-z.github.io/express-cli/getting-started.html" />
+    <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="site-header-inner">
+        <a class="brand" href="./"><span class="brand-mark" aria-hidden="true">exm</span> Express Modular CLI</a>
+        <div class="header-links">
+          <button type="button" class="menu-toggle" aria-expanded="false">Menu</button>
+          <a href="https://github.com/abir-islam-z/express-cli">GitHub</a>
+          <a class="btn-sm btn-sm-primary" href="https://www.npmjs.com/package/express-modular-cli">npm</a>
+        </div>
+      </div>
+    </header>
+    <div class="layout">
+      <aside class="sidebar" aria-label="Documentation">
+        <nav>
+          <div class="nav-group"><p class="nav-label">Start</p><ul>
+            <li><a data-nav="index.html" href="./index.html">Introduction</a></li>
+            <li><a data-nav="getting-started.html" href="./getting-started.html">Getting started</a></li>
+          </ul></div>
+          <div class="nav-group"><p class="nav-label">Reference</p><ul>
+            <li><a data-nav="commands.html" href="./commands.html">Commands &amp; flags</a></li>
+            <li><a data-nav="schematics.html" href="./schematics.html">Schematics</a></li>
+            <li><a data-nav="architecture.html" href="./architecture.html">Architecture</a></li>
+          </ul></div>
+          <div class="nav-group"><p class="nav-label">Guides</p><ul>
+            <li><a data-nav="guides.html" href="./guides.html">Examples &amp; troubleshooting</a></li>
+            <li><a data-nav="roadmap.html" href="./roadmap.html">Roadmap</a></li>
+          </ul></div>
+        </nav>
+      </aside>
+      <main class="content">
+        <div class="content-inner">
+          <h1 class="page-title">Getting started</h1>
+          <p class="page-intro">Install the CLI globally, scaffold a project, then generate features inside it.</p>
+
+          <nav class="toc" aria-label="On this page">
+            <p class="toc-title">On this page</p>
+            <ul>
+              <li><a href="#install">Install</a></li>
+              <li><a href="#create">Create a project</a></li>
+              <li><a href="#data">Choose a data layer</a></li>
+              <li><a href="#generate">Generate a module</a></li>
+              <li><a href="#run">Run the API</a></li>
+            </ul>
+          </nav>
+
+          <h2 id="install">Install</h2>
+          <pre><code>npm install -g express-modular-cli</code></pre>
+          <p>Node.js <strong>18+</strong> runs the CLI. Generated projects need <strong>22.18+</strong> for Node’s built-in TypeScript runner.</p>
+
+          <h2 id="create">Create a project</h2>
+          <pre><code>exm-cli new my-api
+cd my-api</code></pre>
+          <p>With a TTY attached, the CLI asks about:</p>
+          <ul>
+            <li>Data layer: none, Mongoose, Prisma, or Drizzle</li>
+            <li>Database (Prisma/Drizzle): PostgreSQL, MySQL, or SQLite</li>
+            <li>PostgreSQL host: Supabase or local</li>
+            <li>Supabase MCP config for Cursor (optional)</li>
+            <li>JWT auth and starter module (Mongoose only)</li>
+            <li>Port, git init, and <code>npm install</code></li>
+          </ul>
+          <p>Skip prompts with <code>--yes</code> and flags. See <a href="./commands.html">Commands &amp; flags</a>.</p>
+
+          <h2 id="data">Choose a data layer</h2>
+          <table>
+            <thead><tr><th>Layer</th><th>Use when</th></tr></thead>
+            <tbody>
+              <tr><td><code>none</code></td><td>You only need routes, middleware, and error handling.</td></tr>
+              <tr><td><code>mongoose</code></td><td>MongoDB, JWT auth pack, and <code>g module</code> generators.</td></tr>
+              <tr><td><code>prisma</code></td><td>SQL with Prisma schema, client, and migrate scripts.</td></tr>
+              <tr><td><code>drizzle</code></td><td>SQL with drizzle-kit and a schema stub.</td></tr>
+            </tbody>
+          </table>
+          <pre><code>exm-cli new shop --yes --orm prisma --database postgres --postgres supabase
+exm-cli new shop --yes --mongo --auth --module product --no-install</code></pre>
+
+          <h2 id="generate">Generate a module</h2>
+          <p>From the project root (Mongoose projects):</p>
+          <pre><code>exm-cli g module order</code></pre>
+          <p>This creates controller, service, model, route, validation, and interface files, then registers the route in <code>src/app/routes/index.ts</code>.</p>
+
+          <h2 id="run">Run the API</h2>
+          <pre><code>cp .env.example .env
+npm install
+npm run dev</code></pre>
+          <p>For Prisma: <code>npx prisma migrate dev</code>. For Drizzle: <code>npm run db:push</code>. Health check: <code>GET /health</code>.</p>
+        </div>
+      </main>
+    </div>
+    <script src="./nav.js" defer></script>
+  </body>
+</html>

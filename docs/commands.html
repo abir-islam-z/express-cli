@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Commands &amp; flags — Express Modular CLI</title>
+    <meta name="description" content="Reference for exm-cli new, generate, dry-run, ORM flags, and all CLI options." />
+    <link rel="canonical" href="https://abir-islam-z.github.io/express-cli/commands.html" />
+    <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="site-header-inner">
+        <a class="brand" href="./"><span class="brand-mark" aria-hidden="true">exm</span> Express Modular CLI</a>
+        <div class="header-links">
+          <button type="button" class="menu-toggle" aria-expanded="false">Menu</button>
+          <a href="https://github.com/abir-islam-z/express-cli">GitHub</a>
+          <a class="btn-sm btn-sm-primary" href="https://www.npmjs.com/package/express-modular-cli">npm</a>
+        </div>
+      </div>
+    </header>
+    <div class="layout">
+      <aside class="sidebar" aria-label="Documentation">
+        <nav>
+          <div class="nav-group"><p class="nav-label">Start</p><ul>
+            <li><a data-nav="index.html" href="./index.html">Introduction</a></li>
+            <li><a data-nav="getting-started.html" href="./getting-started.html">Getting started</a></li>
+          </ul></div>
+          <div class="nav-group"><p class="nav-label">Reference</p><ul>
+            <li><a data-nav="commands.html" href="./commands.html">Commands &amp; flags</a></li>
+            <li><a data-nav="schematics.html" href="./schematics.html">Schematics</a></li>
+            <li><a data-nav="architecture.html" href="./architecture.html">Architecture</a></li>
+          </ul></div>
+          <div class="nav-group"><p class="nav-label">Guides</p><ul>
+            <li><a data-nav="guides.html" href="./guides.html">Examples &amp; troubleshooting</a></li>
+            <li><a data-nav="roadmap.html" href="./roadmap.html">Roadmap</a></li>
+          </ul></div>
+        </nav>
+      </aside>
+      <main class="content">
+        <div class="content-inner content-wide">
+          <h1 class="page-title">Commands &amp; flags</h1>
+          <p class="page-intro">Global binary: <code>exm-cli</code>. Package name: <code>express-modular-cli</code>.</p>
+
+          <h2 id="new">exm-cli new</h2>
+          <pre><code>exm-cli new [project-name] [options]</code></pre>
+          <p>Writes a new directory in the current working folder. Fails if the name already exists.</p>
+          <pre><code>exm-cli new my-api
+exm-cli new my-api --yes --dry-run --no-git --no-install
+exm-cli new my-api --yes --orm drizzle --database sqlite
+exm-cli new my-api --yes --mongo --auth --module product</code></pre>
+
+          <h2 id="generate">exm-cli generate (g)</h2>
+          <pre><code>exm-cli generate &lt;type&gt; &lt;name&gt; [options]
+exm-cli g &lt;type&gt; &lt;name&gt;</code></pre>
+          <p>Must run inside a valid project (see <a href="./architecture.html#validation">validation</a>).</p>
+          <pre><code>exm-cli g module user
+exm-cli g controller product
+exm-cli g module ticket --dry-run</code></pre>
+
+          <h2 id="flags">Flags</h2>
+          <table>
+            <thead>
+              <tr><th>Flag</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>-h, --help</code></td><td>Show help.</td></tr>
+              <tr><td><code>--dry-run</code></td><td>Print plan only; no writes, git, or install.</td></tr>
+              <tr><td><code>-y, --yes</code></td><td>Skip interactive prompts; use defaults.</td></tr>
+              <tr><td><code>--orm &lt;name&gt;</code></td><td><code>none</code>, <code>mongoose</code>, <code>prisma</code>, <code>drizzle</code></td></tr>
+              <tr><td><code>--mongo / --no-mongo</code></td><td>Shorthand for Mongoose on/off.</td></tr>
+              <tr><td><code>--database &lt;name&gt;</code></td><td><code>postgres</code>, <code>mysql</code>, <code>sqlite</code> (Prisma/Drizzle)</td></tr>
+              <tr><td><code>--postgres &lt;host&gt;</code></td><td><code>supabase</code> or <code>local</code></td></tr>
+              <tr><td><code>--supabase-mcp</code></td><td>Write Cursor MCP config (Supabase Postgres).</td></tr>
+              <tr><td><code>--no-supabase-mcp</code></td><td>Skip MCP files.</td></tr>
+              <tr><td><code>--auth / --no-auth</code></td><td>JWT pack (requires Mongoose).</td></tr>
+              <tr><td><code>--module &lt;name&gt;</code></td><td>Starter Mongoose module.</td></tr>
+              <tr><td><code>--port &lt;n&gt;</code></td><td>Default <code>1337</code>.</td></tr>
+              <tr><td><code>--git / --no-git</code></td><td>Initialize git repository.</td></tr>
+              <tr><td><code>--install / --no-install</code></td><td>Run <code>npm install</code> after scaffold.</td></tr>
+            </tbody>
+          </table>
+
+          <div class="callout">
+            <strong>Constraints:</strong> JWT auth and <code>--module</code> require Mongoose. Database flags apply only to
+            Prisma or Drizzle. Supabase options apply only when <code>--database postgres</code>.
+          </div>
+
+          <h2 id="types">Component types</h2>
+          <p><code>module</code>, <code>controller</code>, <code>service</code>, <code>model</code>, <code>route</code>, <code>validation</code>, <code>interface</code></p>
+          <p>Aliases: <code>mo</code>, <code>c</code>, <code>s</code>, <code>m</code>, <code>r</code>, <code>v</code>, <code>i</code></p>
+        </div>
+      </main>
+    </div>
+    <script src="./nav.js" defer></script>
+  </body>
+</html>

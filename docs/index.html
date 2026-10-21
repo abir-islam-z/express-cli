@@ -6,27 +6,13 @@
     <title>Express Modular CLI — Documentation</title>
     <meta
       name="description"
-      content="Documentation for express-modular-cli (exm-cli): scaffold Express.js APIs in TypeScript with Mongoose, Prisma, or Drizzle."
-    />
-    <meta
-      name="keywords"
-      content="express-modular-cli, exm-cli, express generator, typescript, mongoose, prisma, drizzle"
+      content="Official documentation for express-modular-cli (exm-cli): scaffold modular Express.js APIs with TypeScript, Mongoose, Prisma, or Drizzle."
     />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://abir-islam-z.github.io/express-cli/" />
-    <meta property="og:type" content="website" />
     <meta property="og:title" content="Express Modular CLI" />
-    <meta
-      property="og:description"
-      content="Zero-dependency CLI for modular Express.js projects with TypeScript."
-    />
+    <meta property="og:description" content="Modular Express.js scaffolding with TypeScript on Node." />
     <meta property="og:url" content="https://abir-islam-z.github.io/express-cli/" />
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="Express Modular CLI" />
-    <meta
-      name="twitter:description"
-      content="Zero-dependency CLI for modular Express.js projects with TypeScript."
-    />
     <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="./style.css" />
     <script type="application/ld+json">
@@ -36,103 +22,123 @@
         "name": "express-modular-cli",
         "alternateName": "exm-cli",
         "applicationCategory": "DeveloperApplication",
-        "operatingSystem": "Windows, macOS, Linux",
-        "description": "CLI that scaffolds modular Express.js projects with TypeScript.",
+        "description": "CLI for modular Express.js projects with TypeScript.",
         "url": "https://abir-islam-z.github.io/express-cli/",
-        "downloadUrl": "https://www.npmjs.com/package/express-modular-cli",
-        "license": "https://opensource.org/licenses/MIT"
+        "downloadUrl": "https://www.npmjs.com/package/express-modular-cli"
       }
     </script>
   </head>
   <body>
-    <header>
-      <div class="wrap">
-        <p class="site-title"><a href="./">Express Modular CLI</a></p>
-        <nav aria-label="Documentation">
-          <a href="./" aria-current="page">Overview</a>
-          <a href="./roadmap.html">Roadmap</a>
-          <a href="https://github.com/abir-islam-z/express-cli/blob/main/README.md">README</a>
-          <a href="https://www.npmjs.com/package/express-modular-cli">npm</a>
+    <header class="site-header">
+      <div class="site-header-inner">
+        <a class="brand" href="./">
+          <span class="brand-mark" aria-hidden="true">exm</span>
+          Express Modular CLI
+        </a>
+        <div class="header-links">
+          <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
           <a href="https://github.com/abir-islam-z/express-cli">GitHub</a>
-        </nav>
+          <a class="btn-sm btn-sm-primary" href="https://www.npmjs.com/package/express-modular-cli">npm</a>
+        </div>
       </div>
     </header>
 
-    <main class="wrap">
-      <h1>Overview</h1>
-      <p>
-        <strong>express-modular-cli</strong> installs the <code>exm-cli</code> command. It scaffolds Express.js
-        projects with a modular folder layout, TypeScript run on Node (no compile step in dev), and generators for
-        modules and single files. The CLI has no runtime npm dependencies.
-      </p>
+    <div class="layout">
+      <aside class="sidebar" id="sidebar" aria-label="Documentation">
+        <nav>
+          <div class="nav-group">
+            <p class="nav-label">Start</p>
+            <ul>
+              <li><a data-nav="index.html" href="./index.html">Introduction</a></li>
+              <li><a data-nav="getting-started.html" href="./getting-started.html">Getting started</a></li>
+            </ul>
+          </div>
+          <div class="nav-group">
+            <p class="nav-label">Reference</p>
+            <ul>
+              <li><a data-nav="commands.html" href="./commands.html">Commands &amp; flags</a></li>
+              <li><a data-nav="schematics.html" href="./schematics.html">Schematics</a></li>
+              <li><a data-nav="architecture.html" href="./architecture.html">Architecture</a></li>
+            </ul>
+          </div>
+          <div class="nav-group">
+            <p class="nav-label">Guides</p>
+            <ul>
+              <li><a data-nav="guides.html" href="./guides.html">Examples &amp; troubleshooting</a></li>
+              <li><a data-nav="roadmap.html" href="./roadmap.html">Roadmap</a></li>
+            </ul>
+          </div>
+        </nav>
+      </aside>
 
-      <h2 id="install">Install</h2>
-      <pre><code>npm install -g express-modular-cli</code></pre>
-      <p class="muted">Node.js 18+ to run the CLI. Generated apps require Node.js 22.18 or newer.</p>
+      <main class="content">
+        <div class="content-inner content-wide">
+          <section class="hero">
+            <h1>Build modular Express APIs without the boilerplate hunt</h1>
+            <p class="lead">
+              <strong>express-modular-cli</strong> gives you <code>exm-cli</code>: interactive project setup, optional
+              Mongoose / Prisma / Drizzle, module generators, and TypeScript that runs on Node without a compile step in
+              dev. The CLI ships with zero runtime dependencies.
+            </p>
+            <div class="install-bar">
+              <pre><code>npm install -g express-modular-cli</code></pre>
+              <a class="btn-sm btn-sm-primary" href="./getting-started.html">Get started</a>
+            </div>
+            <div class="pill-row">
+              <span class="pill">Node 22.18+ in generated apps</span>
+              <span class="pill">#app import aliases</span>
+              <span class="pill">Dry-run</span>
+              <span class="pill">Supabase + MCP</span>
+              <span class="pill">MIT</span>
+            </div>
+          </section>
 
-      <h2 id="new">Create a project</h2>
-      <p>With a terminal attached, <code>exm-cli new</code> asks which options you want. Use flags to skip prompts.</p>
-      <pre><code>exm-cli new my-api
-exm-cli new my-api --yes --dry-run
-exm-cli new my-api --yes --mongo --auth --module product
-exm-cli new my-api --yes --orm prisma --database postgres --postgres supabase</code></pre>
+          <div class="card-grid">
+            <article class="card">
+              <h3>Getting started</h3>
+              <p>Create a project, pick your data layer, and run <code>npm run dev</code>.</p>
+              <p><a href="./getting-started.html">Read guide →</a></p>
+            </article>
+            <article class="card">
+              <h3>Commands &amp; flags</h3>
+              <p>Full reference for <code>new</code>, <code>generate</code>, and non-interactive flags.</p>
+              <p><a href="./commands.html">View reference →</a></p>
+            </article>
+            <article class="card">
+              <h3>Schematics</h3>
+              <p>Controllers, services, models, routes, validation, and full modules.</p>
+              <p><a href="./schematics.html">Component types →</a></p>
+            </article>
+            <article class="card">
+              <h3>Architecture</h3>
+              <p>Folder layout, <code>#app</code> aliases, and automatic route registration.</p>
+              <p><a href="./architecture.html">Learn more →</a></p>
+            </article>
+          </div>
 
-      <h3>Data layer</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>Option</th>
-            <th>Notes</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>None</td>
-            <td>API shell, health route, global error handler.</td>
-          </tr>
-          <tr>
-            <td>Mongoose</td>
-            <td>MongoDB. JWT auth and <code>g module</code> use Mongoose models.</td>
-          </tr>
-          <tr>
-            <td>Prisma</td>
-            <td>PostgreSQL, MySQL, or SQLite. Includes schema and client stub.</td>
-          </tr>
-          <tr>
-            <td>Drizzle</td>
-            <td>Same databases with drizzle-kit scripts.</td>
-          </tr>
-        </tbody>
-      </table>
-      <p>
-        For PostgreSQL with Prisma or Drizzle you can pick local Postgres or Supabase. Supabase can add Cursor MCP
-        config files; you still fill connection strings in <code>.env</code> from the dashboard.
-      </p>
+          <h2>What you get</h2>
+          <ul>
+            <li>Layered modules under <code>src/app/modules</code> with controller → service → model flow</li>
+            <li>Global error handler, Zod errors, and optional Mongoose / JWT handlers</li>
+            <li>Health route, Helmet, CORS, and cookie parser wired in <code>app.ts</code></li>
+            <li>Generators that update <code>src/app/routes/index.ts</code> when you add a module</li>
+            <li>Cursor agent skill in every new project for consistent CLI usage</li>
+          </ul>
 
-      <h2 id="generate">Generate components</h2>
-      <p>Run inside an existing project directory:</p>
-      <pre><code>exm-cli g module user
-exm-cli g controller user
-exm-cli g module ticket --dry-run</code></pre>
-      <p>Types: <code>module</code>, <code>controller</code>, <code>service</code>, <code>model</code>, <code>route</code>, <code>validation</code>, <code>interface</code> (short aliases: mo, c, s, m, r, v, i).</p>
+          <div class="callout">
+            <strong>Tip:</strong> Run <code>exm-cli new my-api --dry-run</code> to preview every file before anything is
+            written. Use <code>--yes</code> in CI or with agents so prompts are skipped.
+          </div>
 
-      <h2 id="layout">Project layout</h2>
-      <pre><code>src/
-  app/
-    modules/&lt;name&gt;/
-    routes/index.ts
-    middlewares/
-    config/
-  app.ts
-  server.ts</code></pre>
-      <p>Cross-folder imports use <code>#app/...</code> (mapped in <code>package.json</code>). Same-folder imports stay relative with a <code>.ts</code> extension.</p>
-
-      <h2 id="dry-run">Dry run</h2>
-      <p><code>--dry-run</code> on <code>new</code> or <code>generate</code> prints files and commands without writing, running git, or installing packages.</p>
-
-      <footer>
-        <p><a href="./roadmap.html">Roadmap</a> · MIT · <a href="https://github.com/abir-islam-z/express-cli">Source</a></p>
-      </footer>
-    </main>
+          <footer class="doc-footer">
+            <p>
+              <a href="./roadmap.html">Roadmap</a> ·
+              <a href="https://github.com/abir-islam-z/express-cli/issues">Issues</a> · MIT
+            </p>
+          </footer>
+        </div>
+      </main>
+    </div>
+    <script src="./nav.js" defer></script>
   </body>
 </html>
