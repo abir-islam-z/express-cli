@@ -115,16 +115,55 @@ a:hover {
 .header-links {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  font-size: 0.875rem;
+  gap: 0.5rem;
+  font-size: 0.8125rem;
 }
 
-.header-links a {
-  color: var(--muted);
-}
-
-.header-links a:hover {
+.ext-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.55rem;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--surface);
   color: var(--text);
+  text-decoration: none;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.ext-link:hover {
+  border-color: #afb8c1;
+  text-decoration: none;
+}
+
+.ext-link-npm {
+  border-color: #e8b4b4;
+  background: #fff5f5;
+}
+
+.ext-link-npm:hover {
+  border-color: #c12127;
+}
+
+.ext-icon {
+  display: block;
+  flex-shrink: 0;
+}
+
+.ext-stat {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--muted);
+  padding-left: 0.15rem;
+  border-left: 1px solid var(--border);
+  margin-left: 0.1rem;
+  padding-left: 0.45rem;
+}
+
+.ext-link-npm .ext-stat {
+  border-left-color: #e8b4b4;
 }
 
 .btn-sm {

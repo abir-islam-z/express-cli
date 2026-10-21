@@ -14,9 +14,17 @@
       <div class="site-header-inner">
         <a class="brand" href="./"><span class="brand-mark" aria-hidden="true">exm</span> Express Modular CLI</a>
         <div class="header-links">
-          <button type="button" class="menu-toggle" aria-expanded="false">Menu</button>
-          <a href="https://github.com/abir-islam-z/express-cli">GitHub</a>
-          <a class="btn-sm btn-sm-primary" href="https://www.npmjs.com/package/express-modular-cli">npm</a>
+          <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+          <a class="ext-link" href="https://github.com/abir-islam-z/express-cli" rel="noopener noreferrer">
+            <img class="ext-icon" src="./assets/github.svg" width="18" height="18" alt="" />
+            GitHub
+            <span class="ext-stat" id="github-stars" title="GitHub stars">…</span>
+          </a>
+          <a class="ext-link ext-link-npm" href="https://www.npmjs.com/package/express-modular-cli" rel="noopener noreferrer">
+            <img class="ext-icon" src="./assets/npm.svg" width="18" height="18" alt="" />
+            npm
+            <span class="ext-stat" id="npm-downloads" title="Total npm downloads">…</span>
+          </a>
         </div>
       </div>
     </header>
@@ -72,9 +80,7 @@ exm-cli g module ticket --dry-run</code></pre>
               <tr><td><code>--mongo / --no-mongo</code></td><td>Shorthand for Mongoose on/off.</td></tr>
               <tr><td><code>--database &lt;name&gt;</code></td><td><code>postgres</code>, <code>mysql</code>, <code>sqlite</code> (Prisma/Drizzle)</td></tr>
               <tr><td><code>--postgres &lt;host&gt;</code></td><td><code>supabase</code> or <code>local</code></td></tr>
-              <tr><td><code>--supabase-mcp</code></td><td>Write Cursor MCP config (Supabase Postgres).</td></tr>
-              <tr><td><code>--no-supabase-mcp</code></td><td>Skip MCP files.</td></tr>
-              <tr><td><code>--auth / --no-auth</code></td><td>JWT pack (requires Mongoose).</td></tr>
+              <tr><td><code>--auth / --no-auth</code></td><td>JWT auth, user, and admin modules (any ORM with a database).</td></tr>
               <tr><td><code>--module &lt;name&gt;</code></td><td>Starter Mongoose module.</td></tr>
               <tr><td><code>--port &lt;n&gt;</code></td><td>Default <code>1337</code>.</td></tr>
               <tr><td><code>--git / --no-git</code></td><td>Initialize git repository.</td></tr>
@@ -83,7 +89,7 @@ exm-cli g module ticket --dry-run</code></pre>
           </table>
 
           <div class="callout">
-            <strong>Constraints:</strong> JWT auth and <code>--module</code> require Mongoose. Database flags apply only to
+            <strong>Constraints:</strong> JWT needs <code>--orm</code> other than <code>none</code>. Starter <code>--module</code> requires Mongoose. Database flags apply only to
             Prisma or Drizzle. Supabase options apply only when <code>--database postgres</code>.
           </div>
 
@@ -93,6 +99,7 @@ exm-cli g module ticket --dry-run</code></pre>
         </div>
       </main>
     </div>
+    <script src="./stats.js" defer></script>
     <script src="./nav.js" defer></script>
   </body>
 </html>
