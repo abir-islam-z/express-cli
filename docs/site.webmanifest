@@ -1,0 +1,8 @@
+{
+  "name": "Express Modular CLI",
+  "short_name": "exm-cli",
+  "start_url": "./",
+  "display": "browser",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff"
+}
