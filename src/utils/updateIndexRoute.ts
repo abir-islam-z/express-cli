@@ -1,8 +1,8 @@
-import { INDEX_ROUTE_PATH } from '../const';
-import { colors } from './console';
-import * as fs from './fs';
-import { logger } from './logger';
-import spinner from './spinner';
+import { INDEX_ROUTE_PATH } from '../const/index.ts';
+import { colors } from './console.ts';
+import * as fs from './fs.ts';
+import { logger } from './logger.ts';
+import spinner from './spinner.ts';
 
 export const updateIndexRoute = async (name: string) => {
   const spinnerInstance = spinner('Updating index route file').start();
@@ -13,7 +13,7 @@ export const updateIndexRoute = async (name: string) => {
     // Import module route file
     name = name.toLowerCase();
     const routeName = `${name.charAt(0).toUpperCase() + name.slice(1)}Routes`;
-    const importLine = `import {${routeName}} from "../modules/${name}/${name}.route";`;
+    const importLine = `import { ${routeName} } from '#app/modules/${name}/${name}.route';`;
     if (!lines.includes(importLine)) {
       lines.splice(1, 0, importLine);
     }

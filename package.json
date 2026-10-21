@@ -1,26 +1,26 @@
 {
   "name": "express-modular-cli",
-  "version": "2.0.1",
-  "description": "An ultra-lightweight CLI tool with only 1 dependency to generate modular Express.js projects",
-  "main": "dist/index.js",
+  "version": "3.0.0",
+  "description": "Generate modular Express.js projects that run TypeScript directly on Node.js",
+  "type": "module",
+  "main": "./dist/index.js",
   "bin": {
     "exm-cli": "dist/index.js"
   },
   "scripts": {
+    "dev": "node src/index.ts",
+    "start": "node src/index.ts",
+    "typecheck": "tsc --noEmit",
     "build": "tsc",
-    "clean": "if exist dist rmdir /s /q dist",
-    "dev": "tsc --watch",
-    "start": "node dist/index.js",
-    "test": "npm run build && node dist/index.js --help",
-    "prepare": "npm run clean && npm run build",
-    "prepublishOnly": "npm run prepare"
+    "test": "node src/index.ts --help",
+    "prepare": "tsc"
   },
   "dependencies": {
     "commander": "^9.4.1"
   },
   "devDependencies": {
-    "@types/node": "^20.0.0",
-    "typescript": "^5.7.3"
+    "@types/node": "^24.10.0",
+    "typescript": "^5.9.3"
   },
   "files": [
     "dist",
@@ -41,6 +41,6 @@
     "url": "https://github.com/abir-islam-z/express-cli"
   },
   "engines": {
-    "node": ">=16.0.0"
+    "node": ">=22.18.0"
   }
 }

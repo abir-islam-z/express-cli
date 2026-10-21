@@ -1,5 +1,5 @@
 import { program } from 'commander';
-import { ProjectGenerator } from '../generators';
+import { ProjectGenerator } from '../generators/index.ts';
 
 export const initNewCommand = () =>
   program

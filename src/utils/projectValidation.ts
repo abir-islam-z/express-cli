@@ -2,9 +2,9 @@
 // Ensures components are only generated within valid Express projects
 
 import * as path from 'path';
-import { colors } from './console';
-import * as fs from './fs';
-import { logger } from './logger';
+import { colors } from './console.ts';
+import * as fs from './fs.ts';
+import { logger } from './logger.ts';
 
 export interface ProjectValidation {
   isValidProject: boolean;

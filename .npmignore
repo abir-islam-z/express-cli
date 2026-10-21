@@ -1,4 +1,5 @@
-# Source files (only include compiled dist)
+# Node.js will not type-strip .ts files inside node_modules.
+# Publish the compiled dist entrypoint; run src directly only from a checkout.
 src/
 tsconfig.json
 eslint.config.mjs

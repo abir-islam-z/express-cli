@@ -1,3 +1,3 @@
-export * from './generateByType';
-export * from './generateModule';
-export * from './generateProject';
+export * from './generateByType.ts';
+export * from './generateModule.ts';
+export * from './generateProject.ts';

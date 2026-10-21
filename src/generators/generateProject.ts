@@ -1,11 +1,12 @@
 import { execSync } from 'child_process';
 import path from 'path';
-import { TEMPLATE_REPO_URL } from '../const';
-import { colors } from '../utils/console';
-import * as fs from '../utils/fs';
-import { simpleGit } from '../utils/git';
-import { logger } from '../utils/logger';
-import spinner from '../utils/spinner';
+import { TEMPLATE_REPO_URL } from '../const/index.ts';
+import { ensureAppAlias } from '../utils/appAlias.ts';
+import { colors } from '../utils/console.ts';
+import * as fs from '../utils/fs.ts';
+import { simpleGit } from '../utils/git.ts';
+import { logger } from '../utils/logger.ts';
+import spinner from '../utils/spinner.ts';
 
 export class ProjectGenerator {
   private readonly projectName: string;
@@ -100,6 +101,7 @@ export class ProjectGenerator {
       }
 
       await fs.writeJson(packageJsonPath, packageJson, { spaces: 2 });
+      await ensureAppAlias(this.targetDir);
     } catch (error) {
       logger.error('❌ Error updating package.json:', error);
       process.exit(1);
@@ -115,7 +117,7 @@ export class ProjectGenerator {
         return;
       }
 
-      // Remove path aliases to use relative imports
+      // Aliases live in package.json "imports" (#app/*). Node does not read tsconfig paths.
       if (tsConfig.compilerOptions) {
         delete tsConfig.compilerOptions.baseUrl;
         delete tsConfig.compilerOptions.paths;
@@ -142,6 +144,7 @@ export class ProjectGenerator {
       spinnerInstance.succeed('Installed dependencies');
       console.log(colors.green('🚀 Project ready!'));
       console.log(colors.cyan(`cd ${this.projectName}`));
+      console.log(colors.cyan('npm run dev'));
     } catch (error) {
       logger.error('❌ Error reading package.json:', error);
       process.exit(1);

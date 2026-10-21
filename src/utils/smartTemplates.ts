@@ -2,7 +2,7 @@
 // Determines if we're in a full project or standalone generation
 
 import * as path from 'path';
-import * as fs from './fs';
+import * as fs from './fs.ts';
 
 export interface TemplateContext {
   name: string;
@@ -14,6 +14,7 @@ export interface ProjectContext {
   hasUtils: boolean;
   hasCatchAsync: boolean;
   hasSendResponse: boolean;
+  hasRouteParam: boolean;
   hasModels: boolean;
   packageJsonExists: boolean;
 }
@@ -24,6 +25,7 @@ export async function detectProjectContext(basePath: string = process.cwd()): Pr
     hasUtils: false,
     hasCatchAsync: false,
     hasSendResponse: false,
+    hasRouteParam: false,
     hasModels: false,
     packageJsonExists: false,
   };
@@ -43,6 +45,9 @@ export async function detectProjectContext(basePath: string = process.cwd()): Pr
 
       context.hasSendResponse = await fs.pathExists(path.join(utilsPath, 'sendResponse.ts')) ||
         await fs.pathExists(path.join(utilsPath, 'sendResponse.js'));
+
+      context.hasRouteParam = await fs.pathExists(path.join(utilsPath, 'routeParam.ts')) ||
+        await fs.pathExists(path.join(utilsPath, 'routeParam.js'));
     }
 
     // Check for app structure
@@ -62,11 +67,15 @@ export async function detectProjectContext(basePath: string = process.cwd()): Pr
 export const templates = {
   controller: ({ name, m_name }: TemplateContext, projectContext: ProjectContext): string => {
     if (projectContext.hasCatchAsync && projectContext.hasSendResponse) {
+      const id = projectContext.hasRouteParam ? 'routeParam(req.params.id)' : 'req.params.id';
+      const routeParamImport = projectContext.hasRouteParam
+        ? "import { routeParam } from '#app/utils/routeParam';\n"
+        : '';
       // Full project with utilities
-      return `import catchAsync from '../../utils/catchAsync';
-import { ${m_name}Service } from './${name}.service';
-import { sendResponse } from '../../utils/sendResponse';
-
+      return `import catchAsync from '#app/utils/catchAsync';
+import { ${m_name}Service } from './${name}.service.ts';
+import { sendResponse } from '#app/utils/sendResponse';
+${routeParamImport}
 const create = catchAsync(async (req, res) => {
   const result = await ${m_name}Service.create(req.body);
 
@@ -90,7 +99,7 @@ const findAll = catchAsync(async (_req, res) => {
 });
 
 const findOne = catchAsync(async (req, res) => {
-  const result = await ${m_name}Service.findOne(req.params.id);
+  const result = await ${m_name}Service.findOne(${id});
 
   sendResponse(res, {
     statusCode: 200,
@@ -101,7 +110,7 @@ const findOne = catchAsync(async (req, res) => {
 });
 
 const update = catchAsync(async (req, res) => {
-  const result = await ${m_name}Service.update(req.params.id, req.body);
+  const result = await ${m_name}Service.update(${id}, req.body);
 
   sendResponse(res, {
     statusCode: 200,
@@ -112,7 +121,7 @@ const update = catchAsync(async (req, res) => {
 });
 
 const remove = catchAsync(async (req, res) => {
-  await ${m_name}Service.remove(req.params.id);
+  await ${m_name}Service.remove(${id});
 
   sendResponse(res, {
     statusCode: 204,
@@ -135,7 +144,7 @@ export const ${m_name}Controller = {
     // Standalone or basic project - self-contained controller
     return `import { Request, Response, NextFunction } from 'express';
 // Note: Import ${m_name}Service when you create the service file
-// import { ${m_name}Service } from './${name}.service';
+// import { ${m_name}Service } from './${name}.service.ts';
 
 // Simple response helper - replace with your preferred response utility
 const sendResponse = (res: Response, options: {
@@ -229,9 +238,9 @@ export const ${m_name}Controller = {
   service: ({ name, m_name }: TemplateContext, projectContext: ProjectContext): string => {
     if (projectContext.hasModels) {
       // Full project with models
-      return `import { T${m_name} } from './${name}.interface';
+      return `import type { T${m_name} } from './${name}.interface.ts';
 // Note: Import ${m_name}Model when you create the model file
-// import { ${m_name}Model } from './${name}.model';
+// import { ${m_name}Model } from './${name}.model.ts';
 
 const create = async (data: T${m_name}) => {
   // TODO: Replace with actual model call
@@ -274,7 +283,7 @@ export const ${m_name}Service = {
     }
 
     // Basic service without models
-    return `import { T${m_name} } from './${name}.interface';
+    return `import type { T${m_name} } from './${name}.interface.ts';
 
 // Simple in-memory storage for demonstration - replace with your database
 let ${name}Storage: T${m_name}[] = [];
@@ -321,7 +330,7 @@ export const ${m_name}Service = {
   },
 
   model: ({ name, m_name }: TemplateContext): string => `import { model, Schema } from 'mongoose';
-import { T${m_name} } from './${name}.interface';
+import type { T${m_name} } from './${name}.interface.ts';
 
 const ${name}Schema = new Schema<T${m_name}>({
   name: {
@@ -343,7 +352,7 @@ export const ${m_name}Model = model<T${m_name}>('${m_name}', ${name}Schema);
 `,
 
   route: ({ name, m_name }: TemplateContext): string => `import { Router } from 'express';
-import { ${m_name}Controller } from './${name}.controller';
+import { ${m_name}Controller } from './${name}.controller.ts';
 
 const router = Router();
 

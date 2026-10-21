@@ -1,7 +1,7 @@
-import { logger } from '../utils/logger';
-import { ensureProjectStructure } from '../utils/projectValidation';
-import { updateIndexRoute } from '../utils/updateIndexRoute';
-import { generateByType } from './generateByType';
+import { logger } from '../utils/logger.ts';
+import { ensureProjectStructure } from '../utils/projectValidation.ts';
+import { updateIndexRoute } from '../utils/updateIndexRoute.ts';
+import { generateByType } from './generateByType.ts';
 
 const filesToCreate = ['controller', 'model', 'route', 'service', 'interface', 'validation'];
 

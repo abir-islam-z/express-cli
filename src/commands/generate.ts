@@ -1,5 +1,5 @@
 import { program } from 'commander';
-import { generateByType, generateModule } from '../generators';
+import { generateByType, generateModule } from '../generators/index.ts';
 
 export const initGenerateCommand = () => {
   const generateCommand = program.command('generate').alias('g');

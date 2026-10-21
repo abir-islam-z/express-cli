@@ -23,8 +23,8 @@ This command will:
 - ✅ Create a complete Express.js project structure
 - ✅ Install all required dependencies
 - ✅ Initialize git repository with initial commit
-- ✅ Set up TypeScript configuration with path aliases
-- ✅ Configure development and production scripts
+- ✅ Set up TypeScript so Node.js can run the source directly
+- ✅ Configure `npm run dev` (`node --watch`) and `npm run start`
 
 ### 2. Generate Components
 
@@ -54,7 +54,7 @@ exm-cli new my-api
 - Downloads the latest Express.js boilerplate
 - Sets up modular project structure
 - Installs dependencies automatically
-- Configures TypeScript with path aliases
+- Configures TypeScript for Node's built-in type stripping
 - Initializes git repository
 
 ### `generate <type> <name>` (alias: `g`)
@@ -211,7 +211,7 @@ my-express-app/
 │   │   └── app.ts                # Express app configuration
 │   └── server.ts                 # Server startup
 ├── package.json
-├── tsconfig.json                 # TypeScript config with path aliases
+├── tsconfig.json                 # Typecheck config for Node.js type stripping
 ├── .env.example
 ├── .gitignore
 └── README.md
@@ -224,7 +224,7 @@ The CLI automatically detects your project environment:
 
 **Inside Project:**
 - Uses existing project utilities (`catchAsync`, `sendResponse`)
-- Imports with path aliases (`@/app/utils/...`)
+- Imports through the `#app/*` alias (`#app/utils/catchAsync`)
 - Integrates with existing route structure
 
 **Outside Project:**
@@ -232,16 +232,32 @@ The CLI automatically detects your project environment:
 - Works as standalone files
 - No external dependencies required
 
-### Path Alias Support
-Generated code uses modern TypeScript path aliases:
+### Path aliases
+Node.js does not read `tsconfig.json` `paths`. The alias that both Node and TypeScript resolve is a `package.json` import:
+
+```json
+{
+  "imports": {
+    "#app/*": "./src/app/*.ts"
+  }
+}
+```
 
 ```typescript
-// Clean imports with path aliases
-import catchAsync from '@/app/utils/catchAsync';
-import { sendResponse } from '@/app/utils/sendResponse';
+import catchAsync from '#app/utils/catchAsync';
+import { sendResponse } from '#app/utils/sendResponse';
+import type { TUser } from './user.interface.ts';
+import { UserService } from './user.service.ts';
+```
 
-// Module-level relative imports
-import { UserService } from './user.service';
+The `#app/*` target adds the `.ts` extension, so alias imports omit it. Files in the same folder stay relative and keep `.ts`, which Node requires on relative specifiers. `exm-cli new` and `exm-cli g` add the `#app/*` import when it is missing.
+
+Run a generated project with:
+
+```bash
+npm run dev    # node --watch src/server.ts
+npm run start  # node src/server.ts
+npm run typecheck
 ```
 
 ### Automatic Route Registration
@@ -249,7 +265,7 @@ When generating modules or routes, the CLI automatically updates the main router
 
 ```typescript
 // Automatically added to src/app/routes/index.ts
-import { UserRoutes } from "../modules/user/user.route";
+import { UserRoutes } from '#app/modules/user/user.route';
 
 const moduleRoutes = [
   { path: "/user", route: UserRoutes },
@@ -259,9 +275,11 @@ const moduleRoutes = [
 
 ## 🛠️ Prerequisites
 
-- **Node.js**: Version 16.0.0 or higher
+- **Node.js**: 22.18.0 or newer. Type stripping is enabled by default from that version, and it is stable on Node.js 24.12 and 25.2.
 - **npm**: Comes with Node.js
 - **Git**: Required for project creation (downloads boilerplate)
+
+Node.js will not run `.ts` files that live inside `node_modules`, so the published `exm-cli` command is compiled JavaScript. In a checkout of this repository, `npm run dev` runs `src/index.ts` directly.
 
 ## 🔍 Validation & Error Handling
 

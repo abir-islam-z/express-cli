@@ -1,12 +1,13 @@
 import path from 'path';
-import { APP_DIR, MODULE_DIR, SOURCE_DIR } from '../const';
-import { schematics } from '../schematics';
-import { colors } from '../utils/console';
-import * as fs from '../utils/fs';
-import { logger } from '../utils/logger';
-import { ensureProjectStructure } from '../utils/projectValidation';
-import { generateFromTemplate } from '../utils/smartTemplates';
-import spinner from '../utils/spinner';
+import { APP_DIR, MODULE_DIR, SOURCE_DIR } from '../const/index.ts';
+import { schematics } from '../schematics.ts';
+import { ensureAppAlias } from '../utils/appAlias.ts';
+import { colors } from '../utils/console.ts';
+import * as fs from '../utils/fs.ts';
+import { logger } from '../utils/logger.ts';
+import { ensureProjectStructure } from '../utils/projectValidation.ts';
+import { generateFromTemplate } from '../utils/smartTemplates.ts';
+import spinner from '../utils/spinner.ts';
 
 /**
  *
@@ -20,6 +21,8 @@ export const generateByType = async (type: string, name: string, skipValidation:
   if (!skipValidation) {
     await ensureProjectStructure();
   }
+
+  await ensureAppAlias();
 
   // file already exists
   const fileAlreadyExists = fs.existsSync(path.join(process.cwd(), SOURCE_DIR, APP_DIR, MODULE_DIR, name, `${name}.${type}.ts`));
