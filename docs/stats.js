@@ -14,21 +14,30 @@ function formatCount(value) {
 async function loadProjectStats() {
   const starsEl = document.getElementById('github-stars');
   const downloadsEl = document.getElementById('npm-downloads');
-  if (!starsEl && !downloadsEl) return;
+  const avatarEl = document.getElementById('maintainer-avatar');
+  const nameEl = document.getElementById('maintainer-name');
 
-  if (starsEl) {
-    try {
-      const response = await fetch('https://api.github.com/repos/abir-islam-z/express-cli');
-      if (response.ok) {
-        const data = await response.json();
-        if (typeof data.stargazers_count === 'number') {
-          starsEl.textContent = formatCount(data.stargazers_count);
-          starsEl.setAttribute('aria-label', `${data.stargazers_count} GitHub stars`);
+  try {
+    const response = await fetch('https://api.github.com/repos/abir-islam-z/express-cli');
+    if (response.ok) {
+      const data = await response.json();
+      if (starsEl && typeof data.stargazers_count === 'number') {
+        starsEl.textContent = formatCount(data.stargazers_count);
+        starsEl.setAttribute('aria-label', `${data.stargazers_count} GitHub stars`);
+      }
+      if (data.owner) {
+        if (avatarEl) {
+          avatarEl.src = data.owner.avatar_url;
+          avatarEl.alt = `${data.owner.login} avatar`;
+        }
+        if (nameEl) {
+          nameEl.textContent = data.owner.login;
+          nameEl.href = data.owner.html_url;
         }
       }
-    } catch {
-      starsEl.textContent = '—';
     }
+  } catch {
+    if (starsEl) starsEl.textContent = '—';
   }
 
   if (downloadsEl) {

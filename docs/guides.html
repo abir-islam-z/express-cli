@@ -66,13 +66,14 @@ exm-cli g module category
 exm-cli g module order
 exm-cli g module cart</code></pre>
 
-          <h2 id="supabase">Supabase + Prisma</h2>
-          <pre><code>exm-cli new api --yes --orm prisma --database postgres --postgres supabase
+          <h2 id="supabase">Supabase + Prisma + JWT</h2>
+          <pre><code>exm-cli new api --yes --orm prisma --database postgres --postgres supabase --auth
 cd api
 # Fill DATABASE_URL and DIRECT_URL in .env from Supabase dashboard
 npm install
-npx prisma migrate dev</code></pre>
-          <p>Copy <code>DATABASE_URL</code> and <code>DIRECT_URL</code> from the Supabase dashboard into <code>.env</code>.</p>
+npx prisma migrate dev
+npm run dev</code></pre>
+          <p>Copy <code>DATABASE_URL</code> and <code>DIRECT_URL</code> from the Supabase dashboard into <code>.env</code>. Auth adds user, auth, and admin routes with JWT middleware—not Mongoose-only.</p>
 
           <h2 id="practices">Best practices</h2>
           <ul>
@@ -99,9 +100,12 @@ npm install -g express-modular-cli</code></pre>
           <h3>Permission errors (global install)</h3>
           <pre><code>npm config set prefix ~/.local
 # ensure ~/.local/bin is on your PATH</code></pre>
+
+          <div data-doc-footer></div>
         </div>
       </main>
     </div>
+    <script src="./footer.js"></script>
     <script src="./stats.js" defer></script>
     <script src="./nav.js" defer></script>
   </body>

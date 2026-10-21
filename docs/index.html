@@ -24,7 +24,12 @@
         "applicationCategory": "DeveloperApplication",
         "description": "CLI for modular Express.js projects with TypeScript.",
         "url": "https://abir-islam-z.github.io/express-cli/",
-        "downloadUrl": "https://www.npmjs.com/package/express-modular-cli"
+        "downloadUrl": "https://www.npmjs.com/package/express-modular-cli",
+        "author": {
+          "@type": "Person",
+          "name": "Abir Islam",
+          "url": "https://github.com/abir-islam-z"
+        }
       }
     </script>
   </head>
@@ -127,7 +132,7 @@
           <h2>What you get</h2>
           <ul>
             <li>Layered modules under <code>src/app/modules</code> with controller → service → model flow</li>
-            <li>Global error handler, Zod errors, and optional Mongoose / JWT handlers</li>
+            <li>Global error handler, Zod errors, Mongoose-specific handlers, and JWT auth for Mongoose, Prisma, or Drizzle</li>
             <li>Health route, Helmet, CORS, and cookie parser wired in <code>app.ts</code></li>
             <li>Generators that update <code>src/app/routes/index.ts</code> when you add a module</li>
             <li>Documented CLI flags for non-interactive and dry-run workflows</li>
@@ -138,15 +143,11 @@
             written. Use <code>--yes</code> in CI or with agents so prompts are skipped.
           </div>
 
-          <footer class="doc-footer">
-            <p>
-              <a href="./roadmap.html">Roadmap</a> ·
-              <a href="https://github.com/abir-islam-z/express-cli/issues">Issues</a> · MIT
-            </p>
-          </footer>
+          <div data-doc-footer></div>
         </div>
       </main>
     </div>
+    <script src="./footer.js"></script>
     <script src="./stats.js" defer></script>
     <script src="./nav.js" defer></script>
   </body>

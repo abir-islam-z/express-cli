@@ -474,6 +474,26 @@ td code {
   font-size: 0.8em;
 }
 
+.maintainer {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+  color: var(--text);
+}
+
+.maintainer-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+}
+
+.maintainer a {
+  font-weight: 600;
+}
+
 .doc-footer {
   margin-top: 3rem;
   padding-top: 1.5rem;
